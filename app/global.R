@@ -2,9 +2,11 @@ library("shiny")
 library("shinydashboard")
 library("tidyverse")
 
-df <- read_csv("app/PEG_2017_2019_opendata_16_05_anni2013_2019.csv")
+load("../data/data_reshape.Rdata")
 
-tipo <- unique(df$TIPO)
-pdc_descrizione_misione <- unique(df$`PDC-Descrizione Missione`)
-pdc_descrizione_programma <- unique(df$`PDC-Descrizione Programma`)
+df <- as_tibble(datafin)
+
+tipo <- unique(df$tipo)
+pdc_descrizione_misione <- unique(df$ds_missione)
+pdc_descrizione_programma <- unique(df$ds_programma)
 
