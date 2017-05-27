@@ -1,6 +1,7 @@
 source("global.R")
 
 dashboardPage(
+	skin = "red",
   dashboardHeader(title = "r-lab3-shinyMilano",
   								titleWidth = 450),
   dashboardSidebar(
@@ -18,18 +19,24 @@ dashboardPage(
 dashboardBody(
     navbarPage("Schede",
                tabPanel("Proporzioni",
-                       sidebarLayout(
-                         sidebarPanel(
-                         	selectInput("var", label = "Grouping Variable",
-                          							choices = c("`PDC-Descrizione Livello1`","`PDC-Descrizione Livello2`",
-                          													"`PDC-Descrizione Livello3`","`PDC-Descrizione Livello4`"),
-                          							selected = "PDC-Descrizione Livello1")
-                            ),
+                        #sidebarLayout(
+                         # sidebarPanel(
+                         # 	selectInput("var", label = "Grouping Variable",
+                         #  							choices = c("`PDC-Descrizione Livello1`","`PDC-Descrizione Livello2`",
+                         #  													"`PDC-Descrizione Livello3`","`PDC-Descrizione Livello4`"),
+                         #  							selected = "PDC-Descrizione Livello1")
+                         #    ),
                 				 mainPanel(
-                				 	plotOutput("proporzione")
-                         )
-                 )),
+                				 	column(12,
+                				 				 selectInput("var", label = "Grouping Variable",
+                				 				 						choices = c("`PDC-Descrizione Livello1`","`PDC-Descrizione Livello2`",
+                				 				 												"`PDC-Descrizione Livello3`","`PDC-Descrizione Livello4`"),
+                				 				 						selected = "PDC-Descrizione Livello1")),
+                				 	column(12, plotOutput("proporzione"))
+                         ))
+               ,
                tabPanel("WorldCloud",
+               				 fluidPage(
                         sidebarLayout(
                           sidebarPanel(
                             textInput("text", label = h3("Text input"), 
@@ -39,6 +46,7 @@ dashboardBody(
                           wordcloud2Output('wordcloud2'),
                           dataTableOutput("tableWords")
 
+                        )
                         )
                         
                )
