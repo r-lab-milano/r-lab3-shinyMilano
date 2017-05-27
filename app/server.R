@@ -12,17 +12,28 @@ function(input, output, session) {
 		hist(data)
 	})
 	
+	output$proporzione <- renderPlot({
+		plot_final_all(df, input$var)
+		plot_final_per_year(df, input$var)})
+	
 	output$wordcloud2 <- renderWordcloud2({
 	  query <- input$text
 	  data <- get_clean_frequencies(input=get_row_from_word(query))
 		wordcloud2(data = data)
 	})
 	
+	output$tableWords <- renderDataTable({
+	  query <- input$text
+	  rows <- get_row_from_word(input$text)
+	  data <- rows %>% dplyr::select(`TIPO`, `Descrizione capitolo PEG`, `RENDICONTO 2013`, 
+	                         `RENDICONTO 2014`, `RENDICONTO 2015`, `RENDICONTO 2016`)
+	  data
+	})
 	
 	callModule(renderSelect, "pdc_descrizione_missione", df = df_filtered_by_tipo,
-						 df_col = "ds_missione", inputId = "pdc_descrizione_missione")
+						 df_col = "PDC-Descrizione Missione", inputId = "pdc_descrizione_missione")
 	
 	callModule(renderSelect, "pdc_descrizione_programma", df = df_filtered_by_tipo,
-						 df_col = "ds_programma", inputId = "pdc_descrizione_programma")
+						 df_col = "PDC-Descrizione Programma", inputId = "pdc_descrizione_programma")
 }
 

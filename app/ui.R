@@ -18,34 +18,25 @@ dashboardPage(
 dashboardBody(
     navbarPage("Schede",
                tabPanel("Proporzioni",
+                       sidebarLayout(
+                         sidebarPanel(
+                         	selectInput("var", label = "Grouping Variable",
+                          							choices = c("`PDC-Descrizione Livello1`","`PDC-Descrizione Livello2`",
+                          													"`PDC-Descrizione Livello3`","`PDC-Descrizione Livello4`"),
+                          							selected = "PDC-Descrizione Livello1")
+                            ),
+                				 mainPanel(
+                				 	plotOutput("proporzione")
+                         )
+                 )),
+               tabPanel("WorldCloud",
                         sidebarLayout(
                           sidebarPanel(
-                            #radioButtons("plotType", "Plot type",
-                            #             c("Scatter"="p", "Line"="l")
-                                         
-                            selectInput("select", label = h3("Select box"), 
-                                        choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3)
-                            )
-                          ),
-                          mainPanel(
-                            plotOutput("plot1")
-                          )
-                        )
-               ),
-               tabPanel("WorldCloud",
-                       # sidebarLayout(
-                       #   sidebarPanel(
-                       #     textInput("text", label = h3("Text input"), value = "Enter text...")
-                       
-                      #  ),
+                            textInput("text", label = h3("Text input"), value = "Termini da cercare")
+                        ),
                         mainPanel(
-                        fluidRow(		
-                        	column(12,
-                        				 sidebarPanel(
-                        				 	textInput("text", label = h3("Text input"), value = "Enter text...")
-                        				 )       
-                        	),
-                        	column(12, wordcloud2Output('wordcloud2', width="500px", height="400px"))
+                          wordcloud2Output('wordcloud2'),
+                          dataTableOutput("tableWords")
 
                         )
                         
