@@ -12,7 +12,7 @@ renderSelect <- function(input, output, session, df, df_col, inputId) {
       unlist %>% 
       unique
     
-    selectInput(inputId, str_to_title(inputId), choices = choices, 
+    selectInput(inputId, stringr::str_to_title(inputId), choices = choices, 
                 selectize = TRUE)
     
   })

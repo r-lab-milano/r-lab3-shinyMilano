@@ -1,11 +1,12 @@
 source("global.R")
 
-ui <- dashboardPage(
+dashboardPage(
   dashboardHeader(title = "cran.rstudio.com"),
   dashboardSidebar(
-    selectInput("select", label = h3("Select box"), 
+    selectInput("tipo", label = h3("Select box"), 
                 choices = c("Tutto", tipo),
                 selectize = TRUE),
+    renderSelectOutput("pdc_descrizione_missione"),
     sidebarMenu(
       menuItem("Dashboard", tabName = "dashboard"),
       menuItem("Raw data", tabName = "rawdata")
@@ -37,29 +38,3 @@ ui <- dashboardPage(
           )
         )
       )
-
-
-server <- function(input, output) {
-  set.seed(122)
-  histdata <- rnorm(500)
-  
-  output$plot1 <- renderPlot({
-    data <- histdata[seq_len(input$slider)]
-    hist(data)
-  })
-  output$plot2 <- renderPlot({
-    data <- histdata[seq_len(input$slider2)]
-    hist(data)
-  })
-}
-
-shinyApp(ui, server)
-
-
-
-
-
-
-
-
-
