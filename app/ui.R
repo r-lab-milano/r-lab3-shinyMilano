@@ -32,7 +32,8 @@ dashboardBody(
                tabPanel("WorldCloud",
                         sidebarLayout(
                           sidebarPanel(
-                            textInput("text", label = h3("Text input"), value = "Termini da cercare")
+                            textInput("text", label = h3("Text input"), 
+                            					value = "Termini da cercare")
                         ),
                         mainPanel(
                           wordcloud2Output('wordcloud2'),

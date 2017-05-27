@@ -5,20 +5,25 @@ function(input, output, session) {
 	histdata <- rnorm(500)
 	
 	df_filtered_by_tipo <- reactive({
-		filter(df, tipo == input$tipo)
-		})
+		if (input$tipo == "Tutto") {
+			df
+		} else {
+			filter(df, tipo == input$tipo)
+		}
+	})
+	
 	output$plot1 <- renderPlot({
 		data <- histdata[1:50]
 		hist(data)
 	})
 	
 	output$proporzione <- renderPlot({
-		plot_final_all(df, input$var)
-		plot_final_per_year(df, input$var)})
+		plot_final_all(df_filtered_by_tipo(), input$var)
+		plot_final_per_year(df_filtered_by_tipo(), input$var)})
 	
 	output$wordcloud2 <- renderWordcloud2({
 	  query <- input$text
-	  data <- get_clean_frequencies(input=get_row_from_word(query))
+	  data <- get_clean_frequencies(input = get_row_from_word(query))
 		wordcloud2(data = data)
 	})
 	
@@ -31,9 +36,9 @@ function(input, output, session) {
 	})
 	
 	callModule(renderSelect, "pdc_descrizione_missione", df = df_filtered_by_tipo,
-						 df_col = "PDC-Descrizione Missione", inputId = "pdc_descrizione_missione")
+						 df_col = "`PDC-Descrizione Missione`", inputId = "pdc_descrizione_missione")
 	
 	callModule(renderSelect, "pdc_descrizione_programma", df = df_filtered_by_tipo,
-						 df_col = "PDC-Descrizione Programma", inputId = "pdc_descrizione_programma")
+						 df_col = "`PDC-Descrizione Programma`", inputId = "pdc_descrizione_programma")
 }
 

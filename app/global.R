@@ -21,5 +21,6 @@ source("Proportions.R")
 #tipo <- unique(df$tipo)
 
 df <- read_csv("../data/PEG_2017_2019_opendata_16_05_anni2013_2019.csv")
+tipo <- unique(df$TIPO)
 
 
