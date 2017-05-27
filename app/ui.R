@@ -32,7 +32,7 @@ dashboardBody(
                 				 				 						choices = c("`PDC-Descrizione Livello1`","`PDC-Descrizione Livello2`",
                 				 				 												"`PDC-Descrizione Livello3`","`PDC-Descrizione Livello4`"),
                 				 				 						selected = "PDC-Descrizione Livello1")),
-                				 	column(12, plotOutput("proporzione"), width="1000px")
+                				 	column(12, plotOutput("proporzione"))
                          ))
                ,
                tabPanel("WorldCloud",
