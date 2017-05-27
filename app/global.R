@@ -3,7 +3,7 @@ library("shinydashboard")
 library("stringr")
 library("tidyverse")
 library("wordcloud2")
-
+library("tidytext")
 source("renderSelect.R")
 source("words.R")
 

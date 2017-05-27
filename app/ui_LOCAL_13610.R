@@ -45,8 +45,7 @@ dashboardBody(
                         				 	textInput("text", label = h3("Text input"), value = "Enter text...")
                         				 )       
                         	),
-                        	column(12, wordcloud2Output('wordcloud2', width="500px", height="400px"))
-
+                        	column(12,plotOutput("plot2", width="500px", height="400px"))
                         )
                         
                )

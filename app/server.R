@@ -1,4 +1,4 @@
-
+require(wordcloud2)
 function(input, output, session) {
   
 	set.seed(122)
