@@ -40,7 +40,7 @@ dashboardBody(
                              #  choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3)
                         ),
                         mainPanel(
-                          plotOutput("plot2")
+                          wordcloud2Output('wordcloud2')
                         )
                )
                )

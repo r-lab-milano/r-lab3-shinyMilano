@@ -1,3 +1,4 @@
+
 function(input, output, session) {
   
 	set.seed(122)
@@ -11,13 +12,14 @@ function(input, output, session) {
 		hist(data)
 	})
 	
-	output$plot2 <- renderPlot({
-		data <- histdata[50:100]
-		hist(data)
+	output$wordcloud2 <- renderWordcloud2({
+	  query <- input$text
+	  data <- get_clean_frequencies(input=get_row_from_word(query))
+		wordcloud2(data = data)
 	})
+	
 	
 	callModule(renderSelect, "pdc_descrizione_missione", df = df_filtered_by_tipo,
 						 df_col = "ds_missione", inputId = "pdc_descrizione_missione")
-	
 }
 
