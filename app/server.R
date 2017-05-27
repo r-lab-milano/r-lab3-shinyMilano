@@ -18,7 +18,7 @@ function(input, output, session) {
 		wordcloud2(data = data)
 	})
 	
-	
+
 	callModule(renderSelect, "pdc_descrizione_missione", df = df_filtered_by_tipo,
 						 df_col = "ds_missione", inputId = "pdc_descrizione_missione")
 	

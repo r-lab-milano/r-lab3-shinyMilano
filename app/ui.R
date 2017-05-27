@@ -20,16 +20,13 @@ dashboardBody(
                tabPanel("Proporzioni",
                         sidebarLayout(
                           sidebarPanel(
-                            #radioButtons("plotType", "Plot type",
-                            #             c("Scatter"="p", "Line"="l")
-                                         
-                            selectInput("select", label = h3("Select box"), 
-                                        choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3)
-                            )
-                          ),
-                          mainPanel(
-                            plotOutput("plot1")
-                          )
+                          	selectInput("var", label = "Grouping Variable", 
+                          							choices = c("`PDC-Descrizione Livello1`","`PDC-Descrizione Livello2`",
+                          													"`PDC-Descrizione Livello3`","`PDC-Descrizione Livello4`"), 
+                          							selected = "PDC-Descrizione Livello1")
+                            ),
+               				 mainPanel(
+               				 	plotOutput("plot1")
                         )
                ),
                tabPanel("WorldCloud",
