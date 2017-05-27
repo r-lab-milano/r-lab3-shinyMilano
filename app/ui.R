@@ -1,7 +1,9 @@
 source("global.R")
 
 dashboardPage(
-  dashboardHeader(title = "cran.rstudio.com"),
+  dashboardHeader(title = "r-lab3-shinyMilano",
+  								titleWidth = 450),
+  
   dashboardSidebar(
     selectInput("tipo", label = h3("Select box"), 
                 choices = c("Tutto", tipo),
@@ -12,29 +14,38 @@ dashboardPage(
       menuItem("Raw data", tabName = "rawdata")
     )
   ),
-  dashboardBody(
-    tabItems(
-      tabItem("dashboard",
-              fluidRow(
-                box(plotOutput("plot1", height = 250)),
-                
-                box(
-                  title = "Controls",
-                  sliderInput("slider", "Number of observations:", 1, 100, 50)
-                )
-              )
-              
-      ),
-      tabItem("rawdata",
-              fluidRow(
-                box(plotOutput("plot2", height = 250)),
 
-                box(
-                  title = "Controls",
-                  sliderInput("slider2", "Number of observations:", 1, 100, 50)
+dashboardBody(
+    navbarPage("Schede",
+               tabPanel("Proporzioni",
+                        sidebarLayout(
+                          sidebarPanel(
+                            #radioButtons("plotType", "Plot type",
+                            #             c("Scatter"="p", "Line"="l")
+                                         
+                            selectInput("select", label = h3("Select box"), 
+                                        choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3)
+                            )
+                          ),
+                          mainPanel(
+                            plotOutput("plot1")
+                          )
+                        )
+               ),
+               tabPanel("WorldCloud",
+                        sidebarLayout(
+                          sidebarPanel(
+                            textInput("text", label = h3("Text input"), value = "Enter text...")
+                            #selectInput("select", label = h3("Select box"), 
+                             #  choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3)
+                        ),
+                        mainPanel(
+                          plotOutput("plot2")
+                        )
+               )
+               )
+    )
+)
                 )
-              )
-            )
-          )
-        )
-      )
+
+
