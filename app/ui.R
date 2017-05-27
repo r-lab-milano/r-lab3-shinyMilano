@@ -3,12 +3,12 @@ source("global.R")
 dashboardPage(
   dashboardHeader(title = "r-lab3-shinyMilano",
   								titleWidth = 450),
-  
   dashboardSidebar(
     selectInput("tipo", label = h3("Select box"), 
                 choices = c("Tutto", tipo),
                 selectize = TRUE),
     renderSelectOutput("pdc_descrizione_missione"),
+    renderSelectOutput("pdc_descrizione_programma"),
     sidebarMenu(
       menuItem("Dashboard", tabName = "dashboard"),
       menuItem("Raw data", tabName = "rawdata")
@@ -40,11 +40,14 @@ dashboardBody(
                         mainPanel(
                           wordcloud2Output('wordcloud2'),
                           dataTableOutput("tableWords")
+
                         )
+                        
                )
                )
     )
 )
-                )
+)
+             
 
 

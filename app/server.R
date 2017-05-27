@@ -1,4 +1,4 @@
-
+require(wordcloud2)
 function(input, output, session) {
   
 	set.seed(122)
@@ -28,5 +28,8 @@ function(input, output, session) {
 	
 	callModule(renderSelect, "pdc_descrizione_missione", df = df_filtered_by_tipo,
 						 df_col = "ds_missione", inputId = "pdc_descrizione_missione")
+	
+	callModule(renderSelect, "pdc_descrizione_programma", df = df_filtered_by_tipo,
+						 df_col = "ds_programma", inputId = "pdc_descrizione_programma")
 }
 
