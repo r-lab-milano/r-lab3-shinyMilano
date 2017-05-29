@@ -26,7 +26,7 @@ dashboardBody(
                          #  													"`PDC-Descrizione Livello3`","`PDC-Descrizione Livello4`"),
                          #  							selected = "PDC-Descrizione Livello1")
                          #    ),
-                				 mainPanel(
+                				 mainPanel(width = 12, 
                 				 	column(12,
                 				 				 selectInput("var", label = "Grouping Variable",
                 				 				 						choices = c("`PDC-Descrizione Livello1`","`PDC-Descrizione Livello2`",
@@ -36,14 +36,13 @@ dashboardBody(
                          ))
                ,
                tabPanel("TimeSeries",
-                        fluidPage(
-                          mainPanel(
+                          mainPanel(width = 12,
                             selectInput("TimeSeries1Choice", "Serie da visualizzare", 
                                       TimeSeries1PossibleValues),
-                            plotOutput("TimeSeries1")
+                              column(6, plotOutput("TimeSeries1")),
+                              column(6, plotOutput("TimeSeries2"))
                           )
-                        )
-                      ),
+                        ),
                tabPanel("WorldCloud",
                				 fluidPage(
                         sidebarLayout(

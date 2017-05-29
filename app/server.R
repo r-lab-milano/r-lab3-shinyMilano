@@ -22,6 +22,10 @@ function(input, output, session) {
     TimeSeries_Programma(TimeSeries1Query)
 	})
 	
+	output$TimeSeries2 <- renderPlot({
+	  
+	})
+	
 	output$proporzione <- renderPlot({
 		plot_final_all(df_filtered_by_tipo(), input$var)
 		plot_final_per_year(df_filtered_by_tipo(), input$var)})
