@@ -35,10 +35,12 @@ dashboardPage(
                         #   mainPanel(
                         selectInput("TimeSeries1Choice", "Serie da visualizzare",
                                     TimeSeries1PossibleValues),
-                        plotOutput("TimeSeries1")
+                        column(6, plotOutput("TimeSeries1")),
+                        column(6, plotOutput("TimeSeries2"))
                         #   )
                         # )
                ),
+
                tabPanel("WorldCloud",
                         # fluidPage(
                         #   sidebarLayout(

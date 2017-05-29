@@ -59,13 +59,16 @@ function(input, output, session) {
   
   
   output$TimeSeries1 <-  renderPlot({
-
+    
     TimeSeries1Query <- input$TimeSeries1Choice
     TimeSeries_Programma(TimeSeries1Query)
+  })
+  
+  output$TimeSeries2 <- renderPlot({
     
   })
   
-
+  
   output$wordcloud2 <- renderWordcloud2({
     query <- input$text
     data <- get_clean_frequencies(input = get_row_from_word(query))
@@ -79,11 +82,7 @@ function(input, output, session) {
                                    `RENDICONTO.2014`, `RENDICONTO.2015`, `RENDICONTO.2016`)
     data
   })
-  #
-  # callModule(renderSelect, "pdc_descrizione_missione", df = df_filtered_by_tipo,
-  #            df_col = "`PDC-Descrizione Missione`", inputId = "pdc_descrizione_missione")
-  # 
-  # callModule(renderSelect, "pdc_descrizione_programma", df = df_filtered_by_tipo,
-  #            df_col = "`PDC-Descrizione Programma`", inputId = "pdc_descrizione_programma")
+  
+  
 }
 

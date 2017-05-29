@@ -14,9 +14,6 @@ char_to_num <- function(col) {
   as.numeric(gsub(",", "", col))
 }
 
-format_descr <- function(col_name) {
-
-}
 
 ###############################################################################
 # Load and clean data
@@ -69,14 +66,14 @@ dati_bil <- dati_bil %>%
 	gather(anno, importo, rendiconto_2013:stanziamento_2019) %>%
 	mutate(anno = as.numeric(str_sub(anno, -4, -1)))
 
-plot_level_series <- function(level, val) {
+plot_level_series <- function(descrizione, val) {
   
   filter_string <- paste0("pdc_livello", level, " == ", val)
   sub_level     <- paste0("pdc_descrizione_livello", level + 1) 
   fill_string   <- paste0("as.integer(", sub_level, ")")
   
   dati_bil %>%
-    filter_(filter_string) %>%
+    filter(pdc_descrizione_programma == descrizione) %>%
     group_by_("anno", sub_level) %>%
     summarise(importo = sum(importo) / 1e6) %>%
     ggplot(aes_string(x = "anno", y = "importo", fill = sub_level)) +
