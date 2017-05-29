@@ -32,9 +32,18 @@ dashboardBody(
                 				 				 						choices = c("`PDC-Descrizione Livello1`","`PDC-Descrizione Livello2`",
                 				 				 												"`PDC-Descrizione Livello3`","`PDC-Descrizione Livello4`"),
                 				 				 						selected = "PDC-Descrizione Livello1")),
-                				 	column(12, plotOutput("proporzione"))
+                				 	plotOutput("proporzione")
                          ))
                ,
+               tabPanel("TimeSeries",
+                        fluidPage(
+                          mainPanel(
+                            selectInput("TimeSeries1Choice", "Serie da visualizzare", 
+                                      TimeSeries1PossibleValues),
+                            plotOutput("TimeSeries1")
+                          )
+                        )
+                      ),
                tabPanel("WorldCloud",
                				 fluidPage(
                         sidebarLayout(
@@ -45,11 +54,9 @@ dashboardBody(
                         mainPanel(
                           wordcloud2Output('wordcloud2'),
                           dataTableOutput("tableWords")
-
+                          )
                         )
-                        )
-                        
-               )
+                      )
                )
     )
 )

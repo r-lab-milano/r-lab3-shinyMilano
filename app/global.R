@@ -10,6 +10,8 @@ library("dplyr")
 library("tidyr")
 library("stringr")
 library("ggplot2")
+
+source("time_series_1.R")
 source("renderSelect.R")
 source("words.R")
 source("Proportions.R")

@@ -17,6 +17,11 @@ function(input, output, session) {
 		hist(data)
 	})
 	
+	output$TimeSeries1 <- renderPlot({
+    TimeSeries1Query <- input$TimeSeries1Choice
+    TimeSeries_Programma(TimeSeries1Query)
+	})
+	
 	output$proporzione <- renderPlot({
 		plot_final_all(df_filtered_by_tipo(), input$var)
 		plot_final_per_year(df_filtered_by_tipo(), input$var)})
