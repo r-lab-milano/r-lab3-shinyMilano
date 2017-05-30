@@ -2,16 +2,18 @@
 function(input, output, session) {
   
   df_filtered <- reactive({
-    if(input$tipo == 'USCITE'){
+    if (input$tipo == 'USCITE') {
       df <- filter(df, tipo == 'USCITE')
-      if (input$missione == 'Tutto') df
-      else {
+      if (input$missione == 'Tutto') {
+      	df
+      } else {
         df <- df %>% 
           filter(ds_missione == input$missione)
       }
       
-      if (input$programma == 'Tutto') df
-      else {
+      if (input$programma == 'Tutto') {
+      	df
+      } else {
         df <- df %>% 
           filter(ds_programma == input$programma)
       }
@@ -34,7 +36,7 @@ function(input, output, session) {
   })
   
   observe({
-    if(input$missione == 'Tutto') {
+    if (input$missione == 'Tutto') {
       programma_filtered <- df %>% 
         filter(tipo == input$tipo, ds_missione == input$missione) %>% 
         select(ds_programma) %>% 
