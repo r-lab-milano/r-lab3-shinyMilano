@@ -1,28 +1,32 @@
 library("shiny")
 library("shinydashboard")
 library("stringr")
-library("tidyverse")
+library("dplyr")
 library("wordcloud2")
 library("tidytext")
-library("readxl")
-library("scales")
-library("dplyr")
-library("tidyr")
-library("stringr")
+library("readr")
+# library("scales")
+# library("dplyr")
+# library("tidyr")
+# library("stringr")
 library("ggplot2")
 
 source("time_series_1.R")
-source("renderSelect.R")
+# source("renderSelect.R")
 source("words.R")
-source("Proportions.R")
+source("structure_plot.R")
 
 
-#load("../data/data_reshape.Rdata")
+# load("../data/data_reshape.Rdata")
 
 #df <- as_tibble(datafin)
-#tipo <- unique(df$tipo)
 
-df <- read_csv("../data/PEG_2017_2019_opendata_16_05_anni2013_2019.csv")
-tipo <- unique(df$TIPO)
+df <- read_delim("~/R/shinyMilano/data/data_reshape.csv",
+                 ";", escape_double = FALSE, col_types = cols(stanziamento = col_number(),
+                                                              stanziamento_cassa = col_number()),
+                 trim_ws = TRUE)
+tipo <- unique(df$tipo)
+
+# tipo <- unique(df$TIPO)
 
 
