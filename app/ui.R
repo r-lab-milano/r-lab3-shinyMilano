@@ -19,15 +19,16 @@ dashboardPage(
                tabPanel("Proporzioni",
                				 div(style = "display: inline-block;vertical-align:top; 
                				 		width: 100px;",
-               				 		selectInput('anno', 'Anno', choices = c(2013:2016), 
+               				 		selectInput('anno', 'Seleziona un anno:', choices = c(2013:2016), 
                				 								selected = 2016)),
                				 div(style = "display: inline-block;vertical-align:top; 
-               				 		width: 500px;", 
-														box('All\'interno di ciascun programma selezionato
-																a fianco, viene mostrato dove e quanto viene 
-																speso per ciascun livello, per ciascun centro 
-																di costo', width = 12)
-														),
+               				 		width: 800px;", 
+               				 		box('Le missioni sono funzioni e obiettivi strategici del Comune: si 
+														declinano in programmi, aggregati di attivita\' finalizzate a realizzarli.
+														Dal box nero a sinistra puoi selezionare la missione e il programma di cui 
+														vuoi osservare i valori. Nel grafico puoi quindi osservare come si distribuisce 
+														la spesa per quel programma, ovvero dove e quanto viene speso per ciascun livello,
+               				 			per ciascun centro di costo', width = 20)),
 														plotOutput('structure', click = 'plot_click')
 														),
     					 
