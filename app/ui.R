@@ -46,7 +46,23 @@ dashboardPage(
                				 	wordcloud2Output('wordcloud2'),
                				 	dataTableOutput("tableWords")
                				 	)
-               				 )
+               				 ),
+    					 
+    					 tabPanel("Top Results",
+    					 				 # fluidPage(
+    					 				 #   sidebarLayout(
+    					 				 sidebarPanel(
+    					 				 	selectInput("tipo_movimento", "Tipo:",
+    					 				 							c("ENTRATE", "USCITE")),
+    					 				 	selectInput("year", "Anno",
+    					 				 							c("2013","2014","2015","2016")),
+    					 				 	textInput("topNum", "Risultati da mostrare:",
+    					 				 						10)
+    					 				 ),
+    					 				 mainPanel(
+    					 				 	dataTableOutput("tableTop")
+    					 				 )
+    					 )
     					 )
     )
 )
