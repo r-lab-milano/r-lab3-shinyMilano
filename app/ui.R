@@ -29,7 +29,7 @@ dashboardPage(
 														vuoi osservare i valori. Nel grafico puoi quindi osservare come si distribuisce 
 														la spesa per quel programma, ovvero dove e quanto viene speso per ciascun livello,
                				 			per ciascun centro di costo', width = 20)),
-														plotOutput('structure', click = 'plot_click')
+														plotOutput('structure', click = 'plot_click', width = "auto", height = "auto")
 														),
     					 
     					 tabPanel("Storico fondi per programma",
