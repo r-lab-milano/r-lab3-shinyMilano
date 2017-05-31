@@ -102,5 +102,10 @@ function(input, output, session) {
   		head(n=input$topNum)
   })
   
+  
+  output$sun <- renderSunburst({
+  	sunburst(data_sun[data_sun$year==input$year_sun,])
+  })
+  
 }
 

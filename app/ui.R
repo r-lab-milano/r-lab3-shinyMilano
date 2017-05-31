@@ -85,8 +85,25 @@ dashboardPage(
     					 				 mainPanel(
     					 				 	dataTableOutput("tableTop")
     					 				 )
+    					 ),
+    					 
+    					 tabPanel("Distribuzione fondi per livelli",
+    					 				 # fluidPage(
+    					 				 #   sidebarLayout(
+    					 				 sidebarPanel(
+    					 				 	helpText("In questa scheda puoi visualizzare quali centri di responsabilità 
+													(unità operative in cui il Comune è organizzato) hanno avuto a disposizione 
+													più fondi. Seleziona il tipo di movimento, l'anno e il numero di
+																	risultati da mostrare, e osserva la classifica."),
+    					 				 	checkboxGroupInput("year_sun", label = "Year", 
+    					 				 										 choices = unique(data_sun$year),
+    					 				 										 selected = 2016)),
+    					 				 	# Show a plot of the generated distribution
+    					 				 	mainPanel(
+    					 				 		sunburstOutput("sun", width = "100%", height = "400px"))
+    					 				 )
     					 )
-    					 )
+    					 
     )
 )
 

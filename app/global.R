@@ -4,6 +4,8 @@ library("stringr")
 library("tidytext")
 library("tidyverse")
 library("wordcloud2")
+library("sunburstR")
+library("d3r")
 
 
 
@@ -21,3 +23,12 @@ df <- read_delim("./data/data_reshape.csv", ";", escape_double = FALSE,
                  trim_ws = TRUE)
 
 tipo <- unique(df$tipo)
+
+load("./data/data_reshape.Rdata")
+
+data_sun <- data.frame(grouping = paste0(datafin$ds_livello1,"-",
+																			datafin$ds_livello2,"-",
+																			datafin$ds_livello3,"-",
+																			datafin$ds_livello4),rendiconto = datafin$rendiconto,
+										year=datafin$anno)
+
