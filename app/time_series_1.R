@@ -1,7 +1,7 @@
 library(tidyverse)
 
 #Carico dataset
-df<-read.csv("../data/PEG_2017_2019_opendata_16_05_anni2013_2019.csv", 
+df<-read.csv("./data/PEG_2017_2019_opendata_16_05_anni2013_2019.csv", 
              header=T, stringsAsFactors = F, dec = ".")
 
 

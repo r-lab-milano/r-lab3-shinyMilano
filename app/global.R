@@ -8,14 +8,14 @@ library("wordcloud2")
 
 
 source("time_series_1.R")
-source("time_series_2.R")
+# source("time_series_2.R")
 # source("renderSelect.R")
 source("words.R")
 source("structure_plot.R")
 #source("top10.R")
 
 
-df <- read_delim("../data/data_reshape.csv", ";", escape_double = FALSE, 
+df <- read_delim("./data/data_reshape.csv", ";", escape_double = FALSE, 
 								 col_types = cols(stanziamento = col_number(),
 								 								 stanziamento_cassa = col_number()),
                  trim_ws = TRUE)
