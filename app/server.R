@@ -80,8 +80,8 @@ function(input, output, session) {
   output$tableWords <- renderDataTable({
     query <- input$text
     rows <- get_row_from_word(input$text)
-    data <- rows %>% dplyr::select(`TIPO`, `Descrizione.capitolo.PEG`, `RENDICONTO.2013`,
-                                   `RENDICONTO.2014`, `RENDICONTO.2015`, `RENDICONTO.2016`)
+    data <- rows %>% dplyr::select(`TIPO`, `Descrizione capitolo PEG`, `RENDICONTO 2013`,
+                                   `RENDICONTO 2014`, `RENDICONTO 2015`, `RENDICONTO 2016`)
     data
   })
   
