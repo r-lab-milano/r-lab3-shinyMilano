@@ -54,14 +54,15 @@ dashboardPage(
                         #   sidebarLayout(
                         sidebarPanel(
                           textInput("text", label = h3("Text input"),
-                                    value = "Termini da cercare")
+                                    value = "Termini da cercare"),
+                          actionButton("go", "Cerca")
                           ),
                				 mainPanel(
                				 	wordcloud2Output('wordcloud2'),
                				 	dataTableOutput("tableWords")
                				 	)
                				 ),
-    					 
+    					
     					 tabPanel("Top Results",
     					 				 # fluidPage(
     					 				 #   sidebarLayout(
