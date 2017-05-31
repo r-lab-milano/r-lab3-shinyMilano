@@ -64,7 +64,9 @@ TimeSeries_Programma<-function(nome_programma){
   ggplot(data = SpeseMilanoTimeSeries %>% 
          filter(PROGRAMMA == nome_programma), 
          aes(x=as.numeric(ANNO), y=IMPORTO, col = SPESA)) +
-    geom_line() +
+    geom_line(size = 2) +
+		geom_point(size = 3) +
+		geom_vline(xintercept = 2016.5, colour = "darkgrey", linetype = 2) +
     ggtitle(nome_programma) +
     labs(x="ANNO") + 
     theme(legend.position = "bottom")

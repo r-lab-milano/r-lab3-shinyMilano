@@ -13,7 +13,9 @@ dashboardPage(
   ),
   
   dashboardBody(
+  	
     navbarPage("Schede",
+    					 
                tabPanel("Proporzioni",
                				 div(style = "display: inline-block;vertical-align:top; 
                				 		width: 100px;",
@@ -28,11 +30,22 @@ dashboardPage(
 														),
 														plotOutput('structure', click = 'plot_click')
 														),
+    					 
     					 tabPanel("TimeSeries",
-    					 				 selectInput("TimeSeries1Choice", "Serie da visualizzare",
-    					 				 						TimeSeries1PossibleValues),
-    					 				 column(6, plotOutput("TimeSeries1")),
-    					 				 column(6, plotOutput("TimeSeries2"))
+    					 				 div(style = "display: inline-block;vertical-align:top; 
+               				 		width: 300px;",
+    					 				 selectInput("TimeSeries1Choice", "Seleziona il programma istituzionale:",
+    					 				 						TimeSeries1PossibleValues)),
+    					 				 div(style = "display: inline-block;vertical-align:top; 
+               				 		width: 500px;", 
+    					 				 		box('I programmi sono aggregati omogenei di attivita\' volti a perseguire 
+															obiettivi strategici del Comune. \n 
+    					 				 				In questa visualizzazione puoi confrontare la spesa effettuata (fino al 2016) 
+    					 				 				e prevista (dal 2017 al 2019) per ciascun programma inserito in bilancio.', 
+    					 				 				width = 12)
+    					 				 ),
+    					 				 column(9, plotOutput("TimeSeries1"))
+    					 				 # column(6, plotOutput("TimeSeries2"))
                ),
 
                tabPanel("WorldCloud",
