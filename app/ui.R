@@ -53,8 +53,12 @@ dashboardPage(
                         # fluidPage(
                         #   sidebarLayout(
                         sidebarPanel(
-                          textInput("text", label = h3("Text input"),
-                                    value = "Termini da cercare"),
+                        	helpText("In questa scheda puoi effettuare una ricerca per parole chiave.
+                          		Inserisci un termine da cercare e clicca su Cerca: potrai visualizzare 
+															la nuvola di parole
+                          		piu\' associate a quel termine, e le voci di bilancio che lo contengono."),
+                        textInput("text", label = h3("Termine da cercare:"),
+                                    value = "Asili"),
                           actionButton("go", "Cerca")
                           ),
                				 mainPanel(
@@ -67,12 +71,16 @@ dashboardPage(
     					 				 # fluidPage(
     					 				 #   sidebarLayout(
     					 				 sidebarPanel(
+    					 				 	helpText("In questa scheda puoi visualizzare quali centri di responsabilita\' 
+													(unita\' operative in cui il Comune e\' organizzato) hanno avuto a disposizione 
+													piu\' fondi. Seleziona il tipo di movimento, l'anno e il numero di
+																	risultati da mostrare, e osserva la classifica."),
     					 				 	selectInput("tipo_movimento", "Tipo:",
     					 				 							c("ENTRATE", "USCITE")),
     					 				 	selectInput("year", "Anno",
     					 				 							c("2013","2014","2015","2016")),
     					 				 	textInput("topNum", "Risultati da mostrare:",
-    					 				 						10)
+    					 				 						15)
     					 				 ),
     					 				 mainPanel(
     					 				 	dataTableOutput("tableTop")

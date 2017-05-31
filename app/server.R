@@ -92,24 +92,13 @@ function(input, output, session) {
   	data_tableWords()
   })
   
-  # output$wordcloud2 <- renderWordcloud2({
-  #   query <- input$text
-  #   data <- get_clean_frequencies(input = get_row_from_word(query))
-  #   wordcloud2(data = data)
-  # })
-  # 
-  # output$tableWords <- renderDataTable({
-  #   query <- input$text
-  #   rows <- get_row_from_word(input$text)
-  #   data <- rows %>% dplyr::select(`TIPO`, `Descrizione capitolo PEG`, `RENDICONTO 2013`,
-  #                                  `RENDICONTO 2014`, `RENDICONTO 2015`, `RENDICONTO 2016`)
-  #   data
-  # })
   
   output$tableTop <- renderDataTable({
   	df %>% select(ds_centro_resp, tipo, anno, rendiconto) %>% 	
   	 filter(tipo == input$tipo_movimento, anno == input$year) %>%
-  		arrange(desc(rendiconto)) %>%
+  		group_by(ds_centro_resp) %>%
+  		summarize(valore = sum(rendiconto)) %>%
+  		arrange(desc(valore)) %>%
   		head(n=input$topNum)
   })
   
