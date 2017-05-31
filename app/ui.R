@@ -87,21 +87,39 @@ dashboardPage(
     					 				 )
     					 ),
     					 
+#     					 tabPanel("Distribuzione fondi per livelli",
+#     					 				 # fluidPage(
+#     					 				 #   sidebarLayout(
+#     					 				 sidebarPanel(
+#     					 				 	helpText("In questa scheda puoi visualizzare quali centri di responsabilità 
+# 													(unità operative in cui il Comune è organizzato) hanno avuto a disposizione 
+# 													più fondi. Seleziona il tipo di movimento, l'anno e il numero di
+# 																	risultati da mostrare, e osserva la classifica."),
+#     					 				 	checkboxGroupInput("year_sun", label = "Year", 
+#     					 				 										 choices = unique(data_sun$year),
+#     					 				 										 selected = 2016)),
+#     					 				 	# Show a plot of the generated distribution
+#     					 				 	mainPanel(
+#     					 				 		sunburstOutput("sun", width = "100%", height = "400px"))
+#     					 				 ),
+    					 
     					 tabPanel("Distribuzione fondi per livelli",
-    					 				 # fluidPage(
-    					 				 #   sidebarLayout(
-    					 				 sidebarPanel(
-    					 				 	helpText("In questa scheda puoi visualizzare quali centri di responsabilità 
-													(unità operative in cui il Comune è organizzato) hanno avuto a disposizione 
-													più fondi. Seleziona il tipo di movimento, l'anno e il numero di
-																	risultati da mostrare, e osserva la classifica."),
-    					 				 	checkboxGroupInput("year_sun", label = "Year", 
-    					 				 										 choices = unique(data_sun$year),
-    					 				 										 selected = 2016)),
-    					 				 	# Show a plot of the generated distribution
-    					 				 	mainPanel(
-    					 				 		sunburstOutput("sun", width = "100%", height = "400px"))
-    					 				 )
+    					 				 div(style = "display: inline-block;vertical-align:top; 
+               				 		width: 100px;",
+    					 				 		checkboxGroupInput("year_sun", label = "Year", 
+    					 				 											 choices = unique(data_sun$year),
+    					 				 											 selected = 2016), inline = T),
+    					 				 div(style = "display: inline-block;vertical-align:top; 
+               				 		width: 800px;", 
+    					 				 		box("La struttura del bilancio comunale è stabilita dal Testo Unico degli 
+																Enti Locali. Per ogni voce di entrata o di spesa, il bilancio è suddiviso 
+    					 				 				  in 4 livelli di dettaglio. In questa visualizzazione puoi navigare dal
+    					 				 				  livello di minor dettaglio (interno del cerchio), al livello di 
+    					 				 				  maggior dettaglio, e verificare la proporzione di fondi che quella
+    					 				 				  voce costituisce.", width = 20)),
+    					 				 sunburstOutput("sun")
+    					 )
+    					 
     					 )
     					 
     )
