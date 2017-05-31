@@ -16,7 +16,7 @@ dashboardPage(
   	
     navbarPage("Schede",
     					 
-               tabPanel("Proporzioni",
+               tabPanel("Ripartizione fondi per missione",
                				 div(style = "display: inline-block;vertical-align:top; 
                				 		width: 100px;",
                				 		selectInput('anno', 'Seleziona un anno:', choices = c(2013:2016), 
@@ -24,7 +24,7 @@ dashboardPage(
                				 div(style = "display: inline-block;vertical-align:top; 
                				 		width: 800px;", 
                				 		box('Le missioni sono funzioni e obiettivi strategici del Comune: si 
-														declinano in programmi, aggregati di attivita\' finalizzate a realizzarli.
+														declinano in programmi, aggregati di attività finalizzate a realizzarli.
 														Dal box nero a sinistra puoi selezionare la missione e il programma di cui 
 														vuoi osservare i valori. Nel grafico puoi quindi osservare come si distribuisce 
 														la spesa per quel programma, ovvero dove e quanto viene speso per ciascun livello,
@@ -32,14 +32,14 @@ dashboardPage(
 														plotOutput('structure', click = 'plot_click')
 														),
     					 
-    					 tabPanel("TimeSeries",
+    					 tabPanel("Storico fondi per programma",
     					 				 div(style = "display: inline-block;vertical-align:top; 
                				 		width: 300px;",
     					 				 selectInput("TimeSeries1Choice", "Seleziona il programma istituzionale:",
     					 				 						TimeSeries1PossibleValues)),
     					 				 div(style = "display: inline-block;vertical-align:top; 
                				 		width: 500px;", 
-    					 				 		box('I programmi sono aggregati omogenei di attivita\' volti a perseguire 
+    					 				 		box('I programmi sono aggregati omogenei di attività volti a perseguire 
 															obiettivi strategici del Comune. \n 
     					 				 				In questa visualizzazione puoi confrontare la spesa effettuata (fino al 2016) 
     					 				 				e prevista (dal 2017 al 2019) per ciascun programma inserito in bilancio.', 
@@ -49,14 +49,14 @@ dashboardPage(
     					 				 # column(6, plotOutput("TimeSeries2"))
                ),
 
-               tabPanel("WorldCloud",
+               tabPanel("Ricerca per testo",
                         # fluidPage(
                         #   sidebarLayout(
                         sidebarPanel(
                         	helpText("In questa scheda puoi effettuare una ricerca per parole chiave.
                           		Inserisci un termine da cercare e clicca su Cerca: potrai visualizzare 
 															la nuvola di parole
-                          		piu\' associate a quel termine, e le voci di bilancio che lo contengono."),
+                          		più associate a quel termine, e le voci di bilancio che lo contengono."),
                         textInput("text", label = h3("Termine da cercare:"),
                                     value = "Asili"),
                           actionButton("go", "Cerca")
@@ -67,13 +67,13 @@ dashboardPage(
                				 	)
                				 ),
     					
-    					 tabPanel("Top Results",
+    					 tabPanel("Top fondi per centro di responsabilità",
     					 				 # fluidPage(
     					 				 #   sidebarLayout(
     					 				 sidebarPanel(
-    					 				 	helpText("In questa scheda puoi visualizzare quali centri di responsabilita\' 
-													(unita\' operative in cui il Comune e\' organizzato) hanno avuto a disposizione 
-													piu\' fondi. Seleziona il tipo di movimento, l'anno e il numero di
+    					 				 	helpText("In questa scheda puoi visualizzare quali centri di responsabilità 
+													(unità operative in cui il Comune è organizzato) hanno avuto a disposizione 
+													più fondi. Seleziona il tipo di movimento, l'anno e il numero di
 																	risultati da mostrare, e osserva la classifica."),
     					 				 	selectInput("tipo_movimento", "Tipo:",
     					 				 							c("ENTRATE", "USCITE")),
