@@ -18,6 +18,7 @@ TimeSeries_Programma <- function(nome_programma) {
 	ggplot(data = SpeseMilanoTimeSeries %>% 
 				 	filter(ds_programma == nome_programma), 
 				 aes(x = anno, y = Total, col = ds_livello1)) +
+		theme_minimal() +
 		geom_line(size = 2) +
 		geom_point(size = 3) +
 		geom_vline(xintercept = 2016.5, colour = "darkgrey", linetype = 2) +
@@ -26,4 +27,4 @@ TimeSeries_Programma <- function(nome_programma) {
 		theme(legend.position = "bottom") 
 }
 
-TimeSeries_Programma2("ORGANI ISTITUZIONALI")
+TimeSeries_Programma("ORGANI ISTITUZIONALI")
