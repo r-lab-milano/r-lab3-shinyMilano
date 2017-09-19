@@ -12,7 +12,7 @@ library("d3r")
 source("time_series_1.R")
 # source("time_series_2.R")
 # source("renderSelect.R")
-source("words.R")
+source("wordcloud.R")
 source("structure_plot.R")
 #source("top10.R")
 
