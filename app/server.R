@@ -92,7 +92,8 @@ function(input, output, session) {
     
   output$tableWords <- renderDataTable({
   	data_tableWords()
-  })
+  }, options = list(paging = FALSE,
+  									scrollX = TRUE))
   
   
   output$tableTop <- renderDataTable({
