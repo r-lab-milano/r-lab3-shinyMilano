@@ -23,8 +23,11 @@ TimeSeries_Programma <- function(nome_programma) {
 		geom_point(size = 3) +
 		geom_vline(xintercept = 2016.5, colour = "darkgrey", linetype = 2) +
 		ggtitle(nome_programma) +
-		labs(x="anno") + 
-		theme(legend.position = "bottom") 
+		labs(x="anno", y = "importo") + 
+		theme(legend.position = "bottom") +
+		annotate("text", x = 2017.5, y = Inf, label = "stanziamento")+
+		annotate("text", x = 2015.5, y = Inf, label = "rendiconto") +
+		scale_colour_manual(values = c("red2", "firebrick4"))
 }
 
 TimeSeries_Programma("ORGANI ISTITUZIONALI")
