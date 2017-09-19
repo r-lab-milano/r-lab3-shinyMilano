@@ -4,33 +4,27 @@ dashboardPage(
   skin = "red",
   dashboardHeader(title = "r-lab3-shinyMilano",
                   titleWidth = 450),
-  dashboardSidebar(
-    selectInput("tipo", 
-                label = h3("Select box"), 
-                choices = tipo, selected = 'USCITE'),
-    selectInput('missione', 'Missione', choices = 'Tutto'),
-    selectInput('programma', 'Programma', choices = 'Tutto')
-  ),
+  dashboardSidebar(disable = TRUE),
   
   dashboardBody(
   	
     navbarPage("Schede",
     					 
                tabPanel("Ripartizione fondi per missione",
-               				 div(style = "display: inline-block;vertical-align:top; 
-               				 		width: 100px;",
-               				 		selectInput('anno', 'Seleziona un anno:', choices = c(2013:2016), 
-               				 								selected = 2016)),
-               				 div(style = "display: inline-block;vertical-align:top; 
-               				 		width: 800px;", 
+                        box(selectInput("tipo", 
+                                        label = "Entrate/Uscite", 
+                                        choices = tipo, selected = 'USCITE'),
+                            selectInput('missione', 'Missione', choices = 'Tutto')),
+                      box( selectInput('programma', 'Programma', choices = 'Tutto'),
+                           selectInput('anno', 'Seleziona un anno:', choices = c(2013:2016), 
+                                       selected = 2016)),
                				 		box('Le missioni sono funzioni e obiettivi strategici del Comune: si 
 														declinano in programmi, aggregati di attività finalizzate a realizzarli.
 														Dal box nero a sinistra puoi selezionare la missione e il programma di cui 
 														vuoi osservare i valori. Nel grafico puoi quindi osservare come si distribuisce 
 														la spesa per quel programma, ovvero dove e quanto viene speso per ciascun livello,
-               				 			per ciascun centro di costo', width = 20)),
-														plotOutput('structure', click = 'plot_click', width = "auto", height = "auto")
-														),
+               				 			per ciascun centro di costo', width = 20),
+														plotOutput('structure', click = 'plot_click', width = "auto", height = "auto")),
     					 
     					 tabPanel("Storico fondi per programma",
     					 				 div(style = "display: inline-block;vertical-align:top; 
