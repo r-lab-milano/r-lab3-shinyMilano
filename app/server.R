@@ -83,8 +83,10 @@ function(input, output, session) {
   data_tableWords <- eventReactive(input$go, {
   	query <- input$text
   	  rows <- get_row_from_word(input$text)
-  	  data <- rows %>% dplyr::select(`TIPO`, `Descrizione capitolo PEG`, `RENDICONTO 2013`,
-  	                                 `RENDICONTO 2014`, `RENDICONTO 2015`, `RENDICONTO 2016`)
+  	  data <- rows %>% dplyr::select(`tipo`, capitolo = `ds_capitolo_PEG`, `anno`,
+  	  															 `rendiconto`) %>%
+  	  	filter(`anno` < 2017) %>%
+  	  	spread(`anno`, `rendiconto`)	
   	  data
   })
     
