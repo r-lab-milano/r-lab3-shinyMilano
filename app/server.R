@@ -1,3 +1,4 @@
+# 1-STRUCTUREPLOT
 
 function(input, output, session) {
   
@@ -58,19 +59,27 @@ function(input, output, session) {
     }, 
     height = 800)
   })
-  
-  
+ 
+   
+# 2-TIMESERIES
+    
   output$TimeSeries1 <-  renderPlot({
     
     TimeSeries1Query <- input$TimeSeries1Choice
     TimeSeries_Programma(TimeSeries1Query)
   })
   
-  output$TimeSeries2 <- renderPlot({
-    
-  })
-  
+ output$TimeSeries2 <- renderPlot({
+ 	TimeSeries_Dettaglio(input$TimeSeries1Choice, "SPESE CORRENTI")
+ 	 })
+ 
+ output$TimeSeries3 <- renderPlot({
+ 	TimeSeries_Dettaglio(input$TimeSeries1Choice, "SPESE IN CONTO CAPITALE")
+ })
 
+  
+# 3-WORDCLOUD
+  
   data_cloud <- eventReactive(input$go, {
   	   query <- input$text
   	   data_cloud <- get_clean_frequencies(input = get_row_from_word(query))
@@ -94,7 +103,8 @@ function(input, output, session) {
   	data_tableWords()
   }, options = list(paging = FALSE,
   									scrollX = TRUE))
-  
+
+# 4-TABLETOP    
   
   output$tableTop <- renderDataTable({
   	df %>% select(ds_centro_resp, tipo, anno, rendiconto) %>% 	
@@ -105,7 +115,9 @@ function(input, output, session) {
   		head(n=input$topNum)
   })
   
-  
+
+# 5-SUNBURST  
+    
   output$sun <- renderSunburst({
   	sunburst(data_sun[data_sun$year==input$year_sun,])
   })

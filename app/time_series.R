@@ -1,7 +1,7 @@
-library(tidyverse)
+# library(tidyverse)
 
 #Carico dataset
-load("app/data/data_reshape.Rdata")
+#load("app/data/data_reshape.Rdata")
 
 SpeseMilanoTimeSeries <- datafin %>% filter(tipo == "USCITE") %>% 
 	filter(ds_livello1 == "SPESE CORRENTI" | 

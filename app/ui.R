@@ -11,7 +11,7 @@ dashboardPage(
     navbarPage("Schede",
     					 
                tabPanel("Ripartizione fondi per missione",
-                        box(selectInput("tipo", 
+                      box(selectInput("tipo", 
                                         label = "Entrate/Uscite", 
                                         choices = tipo, selected = 'USCITE'),
                             selectInput('missione', 'Missione', choices = 'Tutto')),
@@ -27,22 +27,41 @@ dashboardPage(
 														plotOutput('structure', click = 'plot_click', width = "auto", height = "auto")),
     					 
     					 tabPanel("Storico fondi per programma",
-    					 				 div(style = "display: inline-block;vertical-align:top; 
-               				 		width: 300px;",
-    					 				 selectInput("TimeSeries1Choice", "Seleziona il programma istituzionale:",
-    					 				 						TimeSeries1PossibleValues)),
-    					 				 div(style = "display: inline-block;vertical-align:top; 
-               				 		width: 500px;", 
-    					 				 		box('I programmi sono aggregati omogenei di attività volti a perseguire 
+    					 				 sidebarPanel(
+    					 				 	helpText('I programmi sono aggregati omogenei di attività volti a perseguire 
 															obiettivi strategici del Comune. \n 
     					 				 				In questa visualizzazione puoi confrontare la spesa effettuata (fino al 2016) 
-    					 				 				e prevista (dal 2017 al 2019) per ciascun programma inserito in bilancio.', 
-    					 				 				width = 12)
+    					 				 				e prevista (dal 2017 al 2019) per ciascun programma inserito in bilancio.'),
+    					 				 	selectInput("TimeSeries1Choice", "Seleziona il programma istituzionale:",
+    					 				 							TimeSeries1PossibleValues)
     					 				 ),
-    					 				 column(9, plotOutput("TimeSeries1"))
-    					 				 # column(6, plotOutput("TimeSeries2"))
-               ),
+    					 				 mainPanel(
+    					 				 	column(12, plotOutput("TimeSeries1"))),
+    					 				 	column(6, plotOutput("TimeSeries2")),
+    					 				 	column(6, plotOutput("TimeSeries3")))
+    					 ),
 
+#     					 tabPanel("Storico fondi per programma",
+#     					 				 div(style = "display: inline-block;vertical-align:top; 
+#                				 		width: 300px;",
+#     					 				 		selectInput("TimeSeries1Choice", "Seleziona il programma istituzionale:",
+#     					 				 								TimeSeries1PossibleValues)),
+#     					 				 div(style = "display: inline-block;vertical-align:top; 
+#                				 		width: 500px;", 
+#     					 				 		box('I programmi sono aggregati omogenei di attività volti a perseguire 
+# 															obiettivi strategici del Comune. \n 
+#     					 				 				In questa visualizzazione puoi confrontare la spesa effettuata (fino al 2016) 
+#     					 				 				e prevista (dal 2017 al 2019) per ciascun programma inserito in bilancio.', 
+#     					 				 				width = 12)
+#     					 				 ),
+#     					 				 # fluidRow(
+#     					 				 # 	column(8, plotOutput("TimeSeries1"))),
+#     					 				 # fluidRow(column(4, plotOutput("TimeSeries2")),
+#     					 				 # column(4, plotOutput("TimeSeries3")))
+#     					 				 column(6, plotOutput("TimeSeries1")),
+#     					 				 column(3, plotOutput("TimeSeries2")),
+#     					 				 column(3, plotOutput("TimeSeries3"))
+#     					 ),
                tabPanel("Ricerca per testo",
                         # fluidPage(
                         #   sidebarLayout(
