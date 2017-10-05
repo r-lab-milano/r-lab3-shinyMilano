@@ -3,10 +3,14 @@
 #Carico dataset
 #load("app/data/data_reshape.Rdata")
 
+#datafin <- datafin %>%
+#	mutate(rendiconto_1000 = round(rendiconto/1000),
+#				 stanziamento_1000 = round(stanziamento/1000))
+
 SpeseMilanoTimeSeries <- datafin %>% filter(tipo == "USCITE") %>% 
 	filter(ds_livello1 == "SPESE CORRENTI" | 
 				 	ds_livello1 == "SPESE IN CONTO CAPITALE") %>%
-	mutate(spesa = rendiconto+stanziamento) %>%
+	mutate(spesa = rendiconto_1000+stanziamento_1000) %>%
 	group_by(anno, ds_livello1, ds_programma) %>%
 	mutate(Total = sum(spesa)) %>%
 	select(anno, ds_livello1, ds_programma, Total) %>%
@@ -35,9 +39,9 @@ TimeSeries_Programma <- function(nome_programma) {
 		labs(x = "anno", y = "importo") 	+
 		guides(col = guide_legend(title = "Tipo di spesa"))+
 		geom_vline(xintercept = 2016.5, colour = "darkgrey", linetype = 2) +
-    annotate("text", x = 2017, y = y_position, label = "stanziamento",
+    annotate("text", x = 2017, y = y_position, label = "stanziamento_1000",
 						 fontface = "italic", size = 4)+
-		annotate("text", x = 2016, y = y_position, label = "rendiconto",
+		annotate("text", x = 2016, y = y_position, label = "rendiconto_1000",
 						 fontface = "italic", size = 4) +
 		ggtitle(paste(nome_programma, "(valori in migliaia di Euro)")) +
 		theme(legend.position = "bottom", plot.title = element_text(size = 15, hjust = 0.5)) +
