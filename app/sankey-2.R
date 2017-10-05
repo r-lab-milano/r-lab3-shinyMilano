@@ -145,21 +145,28 @@ df2dict <- function(df, key, value) {
 	names(dict) <- df[[key]]
 	dict
 }
-label_dict_get <- function(df, level, level_name, colnodes_resh, colnodes_pre) {
+label_dict_get_ <- function(df, level, level_name, colnodes_resh, colnodes_pre) {
 	temp <- df
-	col_resh <- colnodes_resh[2]
-	col_pre  <- paste0("ds_", colnodes_pre[2])
+	col_resh <- colnodes_resh[level]
+	col_pre  <- paste0("ds_", colnodes_pre[level])
 	temp %>%
 		select(!!col_resh, !!col_pre) %>%
-		distinct(missione_resh, ds_missione)
+		# distinct(missione_resh, ds_missione)
+		distinct_(col_resh, col_pre) %>%
+		rename( num = !!col_resh, desc = !!col_pre)
 }
-
+label_dict_get <- function(df, depth, level_name, colnodes_resh, colnodes_pre) {
+	stopifnot(depth >= 2)
+	out <- NULL
+	for (level in 2:depth) {
+		tmp <- label_dict_get_(df, level, "", colnodes_resh, colnodes_pre) 
+		out <- rbind(out, tmp)
+	}
+	out
+}
 # exe ---------------------------------------------------------------------
 
-data_comune <- load_data()
-anno <- 2013
-tipo <- "USCITE"
-semi_sanky <- function(df, anno, tipo) {
+semi_sanky <- function(df, anno, tipo, depth = 1) {
 	data_comune <- df
 	data_comune_this_  <- filter_period(data_comune, anno, tipo)
 	## LIVELLI DI COSTI (TIPO ENTRATE)
@@ -171,7 +178,7 @@ semi_sanky <- function(df, anno, tipo) {
 	links <- edges_get(data_comune_this, lnc, colnodes_resh, values)$links
 	links
 	# stopifnot( links  == edges_get_2(data_comune_this)$links )
-	links <- data_max_level_filter(links, max_level = 1)
+	links <- data_max_level_filter(links, max_level = depth)
 	
 	nodes <- nodes_id_get(links)
 	# label -------------------------------------------------------------------
@@ -182,14 +189,14 @@ semi_sanky <- function(df, anno, tipo) {
 	full_df <- full_df_get(data_comune, colnodes_pre, colnodes_resh)
 	
 	nodes_labels <- 
-		label_dict_get(full_df, 1, "1.1", colnodes_resh, colnodes_pre)  %>%
-		df2dict("missione_resh", "ds_missione")
-	nodes_df_1 <-	label_dict_get(full_df, 1, "1.1", colnodes_resh, colnodes_pre) 
+		label_dict_get(full_df, depth+1, "1.1", colnodes_resh, colnodes_pre)  %>%
+		df2dict("num", "desc")
+	nodes_df_1 <-	label_dict_get(full_df, depth+1, "1.1", colnodes_resh, colnodes_pre) 
 	nodes_df_2 <- data.frame(name=names(nodes),ID=nodes,stringsAsFactors=FALSE)
 	df_nodes <- nodes_df_2 %>%
-		left_join(nodes_df_1,by = c(name = "missione_resh")) %>%
-		mutate(name = ds_missione) %>%
-		select(- ds_missione)
+		left_join(nodes_df_1,by = c(name = "num")) %>%
+		mutate(name = desc) %>%
+		select(- desc)
 	
 	
 	
@@ -205,9 +212,26 @@ semi_sanky <- function(df, anno, tipo) {
 		df_nodes  = df_nodes
 	)	
 }
-sank1 <- semi_sanky(data_comune, anno = anno, tipo = tipo)
-# sank2 <- semi_sanky(data_comune, anno = anno, tipo = "USCITE")
-	ss <- sankeyNetwork(Links = sank1$links_wId, Nodes = sank1$df_nodes, Source = 'source',
+data_comune <- load_data()
+anno <- 2013
+tipo <- "USCITE"
+sank_out <- semi_sanky(data_comune, anno = anno, tipo = "USCITE", depth = 1)
+sank_in <- semi_sanky(data_comune, anno = anno, tipo = "ENTRATE", depth = 3)
+sank_invert <- function(sank) {
+	sank$links_wId <-
+		sank$links_wId %>%
+		mutate(source_ = target, target = source, source = source_)
+	sank
+}
+sank_merge <- function(sank1, sank2) {
+	list(
+		links_wId = c(sank1$links_wId, sank2$links_wId),
+		df_nodes  = c(sank1$df_nodes , sank2$df_nodes)
+	)	
+}
+sank <- sank_merge(sank_out, sank_invert(sank_in))
+sank <- sank_out ### wip
+ss <- sankeyNetwork(Links = sank$links_wId, Nodes = sank$df_nodes, Source = 'source',
 										Target = 'target', Value = 'value',NodeID = 'name',	
 										units = 'euro', fontSize = 10, nodeWidth = 10)
 ss
