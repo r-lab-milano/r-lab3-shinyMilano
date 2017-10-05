@@ -21,13 +21,13 @@ datafin <- datafin %>%
 				 stanziamento_1000 = round(stanziamento/1000))
 
 
-
+source("structure_plot.R")
 source("time_series.R")
 source("time_series_test.R")
 # source("time_series_2.R")
 # source("renderSelect.R")
 source("wordcloud.R")
-source("structure_plot.R")
+source("toptable.R")
 #source("top10.R")
 source("sunburst.R")
 

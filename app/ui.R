@@ -79,7 +79,7 @@ dashboardPage(
 							 				 	selectInput("year", "Anno",
 							 				 							c("2013","2014","2015","2016")),
 							 				 	textInput("topNum", "Risultati da mostrare:",
-							 				 						15)
+							 				 						10)
 							 				 ),
 							 				 mainPanel(
 							 				 	dataTableOutput("tableTop")

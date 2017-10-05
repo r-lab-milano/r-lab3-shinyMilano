@@ -54,10 +54,12 @@ function(input, output, session) {
 	data_tableWords <- eventReactive(input$go, {
 		query <- input$text
 		rows <- get_row_from_word(input$text)
-		data <- rows %>% dplyr::select(`tipo`, capitolo = `ds_capitolo_PEG`, `anno`,
-																	 `rendiconto_1000`) %>%
-			filter(`anno` < 2017) %>%
-			spread(`anno`, `rendiconto_1000`)
+			data <- rows %>% select(tipo, capitolo = ds_capitolo_PEG, anno,
+																	 rendiconto_1000) %>%
+			filter(anno < 2017) %>%
+			spread(anno, rendiconto_1000) %>%
+			rename("Movimento" = tipo,
+						 "Dettaglio voce (valori in migliaia di euro)" = capitolo)
 		data
 	})
 	
@@ -68,15 +70,20 @@ function(input, output, session) {
 	
 	# 4-TABLETOP    
 	
-	output$tableTop <- renderDataTable({
-		datafin %>% select(ds_centro_resp, tipo, anno, rendiconto_1000) %>% 	
-			filter(tipo == input$tipo_movimento, anno == input$year) %>%
-			group_by(ds_centro_resp) %>%
-			summarize(valore = sum(rendiconto_1000)) %>%
-			arrange(desc(valore)) %>%
-			head(n=input$topNum)
-	})
+	# output$tableTop <- renderDataTable({
+	# 	datafin %>% select(ds_centro_resp, tipo, anno, rendiconto_1000) %>% 	
+	# 		filter(tipo == input$tipo_movimento, anno == input$year) %>%
+	# 		group_by(ds_centro_resp) %>%
+	# 		summarize(valore = sum(rendiconto_1000)) %>%
+	# 		arrange(desc(valore)) %>%
+	# 		rename("Centro di responsabilità" = ds_centro_resp,
+	# 					 "Valore (in migliaia di euro)" = valore) %>%
+	# 		head(n=input$topNum)
+	# })
 	
+	output$tableTop <- renderDataTable({
+		dataTop(input$tipo_movimento, input$year, input$topNum)
+	})
 	
 	# 5-SUNBURST  
 	
