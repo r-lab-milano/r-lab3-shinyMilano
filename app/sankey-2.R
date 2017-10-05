@@ -58,35 +58,40 @@ data_comune_this <- add_unique_level(data_comune_this_)
 colnodes_resh <- c("parent",paste(colnodes,"resh",sep="_"))
 
 lnc <- length(colnodes_resh)-1
-links <- NULL
 
 
 rendiconto <- data_comune_this$rendiconto
 names(rendiconto) <- data_comune_this$cdc_resh
 values <- rendiconto
+options(max.print = 100)
 
-for (i in rev(1:lnc)) {
-  
-    icol <- colnodes_resh[c(i,i+1)]
-    print(icol)
-    temp <- data_comune_this[,c(icol,"rendiconto")]
-    names(temp) <- c("source","target","value")
-   
-    
-    ic <- duplicated(temp$target)
-    temp$ic <- ic 
-    temp <- temp[which(!ic),]
-    temp$level <- i+1-1
-    
-    if (!is.null(values)) temp$value <- as.numeric(values[temp$target])
-    
-    values <- tapply(X=temp$value,FUN=sum,INDEX=temp$source,simplify=TRUE)
-   
-   
-    links <- rbind(temp,links)  
-  
-  
+edges_get <- function(variables) {
+	links <- NULL ## accumulator
+	for (i in rev(1:lnc)) {
+		
+		## seleziona i livelli consecutivi
+		icol <- colnodes_resh[c(i,i+1)]
+		## le prende con la colonna rendiconto
+		temp <- data_comune_this[,c(icol,"rendiconto")]
+		## set names expected by sankey
+		names(temp) <- c("source","target","value")
+		
+		## remove duplicated
+		ic <- duplicated(temp$target)
+		temp$ic <- ic 
+		temp <- temp[which(!ic),]
+		temp$level <- i+1-1
+		
+		if (!is.null(values)) temp$value <- as.numeric(values[temp$target])
+		
+		values <- tapply(X=temp$value,FUN=sum,INDEX=temp$source,simplify=TRUE)
+		
+		
+		links <- rbind(temp,links)  
+	}
+	links
 }
+links <- edges_get()
 
 max_level <- 2 ## massimo livello rappresentato , va sommato +1 !!! 
 links <- links[links$level<=max_level,]
