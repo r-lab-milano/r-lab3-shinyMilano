@@ -69,6 +69,7 @@ TimeSeries_Dettaglio <- function(nome_programma, spesa) {
 																				 	select(Total)), label = "rendiconto",
 						 fontface = "italic", size = 4) +
 		scale_fill_discrete(name= "Dettaglio spesa", 
-												labels = sapply(labels_legenda, stringr::str_wrap, width = 30))
+												labels = sapply(labels_legenda, stringr::str_wrap, width = 20)) +
+		guides(fill = guide_legend(nrow=2, byrow=TRUE))
 }
 
