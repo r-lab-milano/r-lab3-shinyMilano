@@ -93,19 +93,15 @@ dashboardPage(
      					 				 				  livello di minor dettaglio (interno del cerchio), al livello di 
      					 				 				  maggior dettaglio, e verificare la proporzione di fondi che quella
      					 				 				  voce costituisce."),
+							 				 	selectInput("tipo_sun", "Tipo:",
+							 				 							c("ENTRATE", "USCITE")),
 							 				 	checkboxGroupInput("year_sun", label = "Year",
 							 				 										 choices = 2013:2016,
 							 				 										 selected = 2016)
 							 				 	),
 							 				 # Show a plot of the generated distribution
 							 				 mainPanel(
-							 				 	textOutput("Entrate"),
-							 				 	sunburstOutput("sunEntrate" #, width = "100%" , height = "200px"
-							 				 								 ),
-							 				 	textOutput("Uscite"),
-							 				 	sunburstOutput("sunUscite" # , width = "100%" # , height = "350px"
-							 				 	 							 )
-							 				 #	sunburstOutput("sun", width = "100%", height = "350px")
+							 				 	sunburstOutput("sun")
 							 				 	)
 							 )
 							 

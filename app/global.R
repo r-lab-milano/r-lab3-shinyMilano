@@ -16,17 +16,6 @@ tipo <- unique(df$tipo)
 
 load("./data/data_reshape.Rdata")
 
-# data_sun <- data.frame(grouping = paste0(datafin$ds_livello1,"-",
-# 																			datafin$ds_livello2,"-",
-# 																			datafin$ds_livello3,"-",
-# 																			datafin$ds_livello4),
-# 											 rendiconto = datafin$rendiconto,
-# 										year=datafin$anno)
-
-
-
-
-
 
 source("time_series.R")
 source("time_series_test.R")

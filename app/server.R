@@ -118,13 +118,11 @@ function(input, output, session) {
 	
 	# 5-SUNBURST  
 	
-	output$sunEntrate <- renderSunburst({
-		printSun(input$year_sun, "ENTRATE")
+	output$sun <- renderSunburst({
+		printSun(input$year_sun, input$tipo_sun)
 	})
 	
-	output$sunUscite <- renderSunburst({
-		printSun(input$year_sun, "USCITE")
-	})
+	
 	
 }
 
