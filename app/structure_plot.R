@@ -1,17 +1,20 @@
+missionValues <- datafin %>% select(ds_missione) %>% unique()
+
 structure_plot <- function(df, annoInput) {
   
   df %>% 
-    filter(anno == annoInput,
+    filter(tipo == "USCITE",
+    	anno == annoInput,
            rendiconto != 0) %>% 
     ggplot(aes(x = factor(ds_livello3), 
                y = factor(ds_cdc), 
                fill = log10(rendiconto))) +
     geom_tile() +
-    facet_grid(. ~ ds_livello1 + ds_livello2, 
+    facet_grid(. ~ ds_livello2, 
                scales = 'free',
                space = 'free',
                labeller = label_wrap_gen(10)) +
-    scale_fill_distiller('Rendiconto', 
+    scale_fill_distiller('Valore di spesa', 
                          palette = 'Reds', 
                          direction = 1, 
                          guide = 'legend',
@@ -20,7 +23,7 @@ structure_plot <- function(df, annoInput) {
                          ) +
     scale_x_discrete('', labels = function(x) str_wrap(x, width = 25), position = 'top') +
     scale_y_discrete('Centro di costo', labels = function(x) str_wrap(x, width = 25)) +
-    ggtitle('Distribuzione del rendiconto') +
+   # ggtitle('Intensità della spesa per livello e centro di costo') +
     guides(size = NULL) +
     theme_light() +
     theme(axis.text.x = element_text(angle = 90, hjust = 1),

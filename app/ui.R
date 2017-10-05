@@ -18,10 +18,11 @@ dashboardPage(
 							 				 		vuoi osservare i valori. Nel grafico puoi quindi osservare come si distribuisce 
 							 				 		la spesa per quel programma, ovvero dove e quanto viene speso per ciascun livello,
 							 				 		per ciascun centro di costo'),
-							 				 	selectInput("tipo", label = "Entrate/Uscite", 
-							 				 	 						choices = tipo, selected = 'USCITE'),
-							 				 	selectInput('missione', 'Missione', choices = 'Tutto'),
-							 				 	selectInput('programma', 'Programma', choices = 'Tutto'),
+							 				 	h3("Seleziona missione e programma"),
+							 				 	selectInput('missione', 'Missione', choices = missionValues,
+							 				 							selected = "ORDINE PUBBLICO E SICUREZZA"),
+							 				 	selectInput('programma', 'Programma', choices = 'Tutto',
+							 				 							selected = "POLIZIA LOCALE E AMMINISTRATIVA"),
 							 				 	selectInput('anno', 'Seleziona un anno:', choices = c(2013:2016), 
 							 				 							selected = 2016)
 							 				 ),
@@ -93,12 +94,16 @@ dashboardPage(
      					 				 				  livello di minor dettaglio (interno del cerchio), al livello di 
      					 				 				  maggior dettaglio, e verificare la proporzione di fondi che quella
      					 				 				  voce costituisce."),
+							 				 	selectInput("tipo_sun", "Tipo:",
+							 				 							c("ENTRATE", "USCITE")),
 							 				 	checkboxGroupInput("year_sun", label = "Year",
 							 				 										 choices = 2013:2016,
-							 				 										 selected = 2016)),
+							 				 										 selected = 2016)
+							 				 	),
 							 				 # Show a plot of the generated distribution
 							 				 mainPanel(
-							 				 	sunburstOutput("sun", width = "100%", height = "400px"))
+							 				 	sunburstOutput("sun")
+							 				 	)
 							 )
 							 
 							 
