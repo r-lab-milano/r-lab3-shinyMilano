@@ -10,24 +10,44 @@ dashboardPage(
 		
 		navbarPage("Schede",
 							 
+							 # tabPanel("Ripartizione fondi per missione",
+							 # 				 box(selectInput("tipo", 
+							 # 				 								label = "Entrate/Uscite", 
+							 # 				 								choices = tipo, selected = 'USCITE'),
+							 # 				 		selectInput('missione', 'Missione', choices = 'Tutto')
+							 # 				 ),
+							 # 				 box( selectInput('programma', 'Programma', choices = 'Tutto'),
+							 # 				 		 selectInput('anno', 'Seleziona un anno:', choices = c(2013:2016), 
+							 # 				 		 						selected = 2016)
+							 # 				 ),
+							 # 				 box('Le missioni sono funzioni e obiettivi strategici del Comune: si 
+							 # 				 		declinano in programmi, aggregati di attività finalizzate a realizzarli.
+							 # 				 		Dal box nero a sinistra puoi selezionare la missione e il programma di cui 
+							 # 				 		vuoi osservare i valori. Nel grafico puoi quindi osservare come si distribuisce 
+							 # 				 		la spesa per quel programma, ovvero dove e quanto viene speso per ciascun livello,
+							 # 				 		per ciascun centro di costo', width = 20),
+							 # 				# plotOutput('structure', click = 'plot_click', width = "auto", height = "auto")
+							 # ),
+							 
 							 tabPanel("Ripartizione fondi per missione",
-							 				 box(selectInput("tipo", 
-							 				 								label = "Entrate/Uscite", 
-							 				 								choices = tipo, selected = 'USCITE'),
-							 				 		selectInput('missione', 'Missione', choices = 'Tutto')
-							 				 		),
-							 				 box( selectInput('programma', 'Programma', choices = 'Tutto'),
-							 				 		 selectInput('anno', 'Seleziona un anno:', choices = c(2013:2016), 
-							 				 		 						selected = 2016)
-							 				 		 ),
-							 				 box('Le missioni sono funzioni e obiettivi strategici del Comune: si 
+							 				 sidebarPanel(
+							 				 	helpText('Le missioni sono funzioni e obiettivi strategici del Comune: si 
 							 				 		declinano in programmi, aggregati di attività finalizzate a realizzarli.
-							 				 		Dal box nero a sinistra puoi selezionare la missione e il programma di cui 
+							 				 		Dal box puoi selezionare la missione e il programma di cui 
 							 				 		vuoi osservare i valori. Nel grafico puoi quindi osservare come si distribuisce 
 							 				 		la spesa per quel programma, ovvero dove e quanto viene speso per ciascun livello,
-							 				 		per ciascun centro di costo', width = 20),
-							 				 plotOutput('structure', click = 'plot_click', width = "auto", height = "auto")
+							 				 		per ciascun centro di costo'),
+							 				 	selectInput("tipo", label = "Entrate/Uscite", 
+							 				 							choices = tipo, selected = 'USCITE'),
+							 				 	selectInput('missione', 'Missione', choices = 'Tutto'),
+							 				 	selectInput('programma', 'Programma', choices = 'Tutto'),
+							 				 	selectInput('anno', 'Seleziona un anno:', choices = c(2013:2016), 
+							 				 							selected = 2016)
 							 				 ),
+							 				 mainPanel(
+							 				 	 plotOutput('structure', click = 'plot_click', width = "auto", height = "auto")
+							 				 )
+							 ),
 							 
 							 tabPanel("Storico fondi per programma",
 							 				 sidebarPanel(
@@ -37,12 +57,12 @@ dashboardPage(
 							 				 					 e prevista (dal 2017 al 2019) per ciascun programma inserito in bilancio.'),
 							 				 	selectInput("TimeSeries1Choice", "Seleziona il programma istituzionale:",
 							 				 							TimeSeries1PossibleValues)
-							 				 	),
+							 				 ),
 							 				 mainPanel(
 							 				 	column(12, plotOutput("TimeSeries1")),
 							 				 	column(6, plotOutput("TimeSeries2")),
 							 				 	column(6, plotOutput("TimeSeries3"))
-							 				 	)
+							 				 )
 							 ),
 							 
 							 #     					 tabPanel("Storico fondi per programma",
@@ -78,7 +98,7 @@ dashboardPage(
 							 				 	textInput("text", label = h3("Termine da cercare:"),
 							 				 						value = "Asili"),
 							 				 	actionButton("go", "Cerca")
-							 				 	),
+							 				 ),
 							 				 mainPanel(
 							 				 	wordcloud2Output('wordcloud2'),
 							 				 	dataTableOutput("tableWords")
@@ -99,7 +119,7 @@ dashboardPage(
 							 				 							c("2013","2014","2015","2016")),
 							 				 	textInput("topNum", "Risultati da mostrare:",
 							 				 						15)
-							 				 	),
+							 				 ),
 							 				 mainPanel(
 							 				 	dataTableOutput("tableTop")
 							 				 )
@@ -136,10 +156,10 @@ dashboardPage(
     					 				 				  maggior dettaglio, e verificare la proporzione di fondi che quella
     					 				 				  voce costituisce.", width = 20)),
 							 				 sunburstOutput("sun")
-							 				 )
 							 )
 		)
 	)
+)
 
 
 
