@@ -19,8 +19,10 @@ SpeseMilanoTimeSeriesLiv2 <- datafin %>%
 	select(anno, ds_livello1, ds_livello2, ds_programma, Total) %>%
 	unique() %>% ungroup() 
 
-
 TimeSeries_Dettaglio <- function(nome_programma, spesa) {
+	labels_mie <- SpeseMilanoTimeSeriesLiv2  %>% 
+		filter(ds_programma == nome_programma & ds_livello1 == spesa) %>% 
+		select(ds_livello2) %>% unique()
 	ggplot() +
 		geom_area(data = SpeseMilanoTimeSeriesLiv2 %>% 
 								filter(ds_livello1 == spesa, ds_programma == nome_programma), 
@@ -30,13 +32,15 @@ TimeSeries_Dettaglio <- function(nome_programma, spesa) {
 		ggtitle(paste(nome_programma, "- Dettaglio spese correnti (valori in migliaia di Euro)")) +
 		labs(x="anno", y = "importo") + 
 		theme(legend.position = "bottom") +
-		annotate("text", x = 2017.5, y = max(SpeseMilanoTimeSeries %>% 
+		annotate("text", x = 2017.5, y = max(SpeseMilanoTimeSeries  %>% 
 																				 	filter(ds_programma == nome_programma) %>% 
 																				 	select(Total)), label = "stanziamento",
 						 fontface = "italic", size = 4)+
 		annotate("text", x = 2015.5, y = max(SpeseMilanoTimeSeries %>% 
 																				 	filter(ds_programma == nome_programma) %>% 
 																				 	select(Total)), label = "rendiconto",
-						 fontface = "italic", size = 4)
+						 fontface = "italic", size = 4) +
+		scale_fill_discrete(name= "Dettaglio spesa", 
+												labels = sapply(labels_mie, stringr::str_wrap, width = 30))
 }
 
