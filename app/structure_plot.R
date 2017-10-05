@@ -1,7 +1,10 @@
+missionValues <- datafin %>% select(ds_missione) %>% unique()
+
 structure_plot <- function(df, annoInput) {
   
   df %>% 
-    filter(anno == annoInput,
+    filter(tipo == "USCITE",
+    	anno == annoInput,
            rendiconto != 0) %>% 
     ggplot(aes(x = factor(ds_livello3), 
                y = factor(ds_cdc), 

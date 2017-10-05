@@ -18,10 +18,10 @@ dashboardPage(
 							 				 		vuoi osservare i valori. Nel grafico puoi quindi osservare come si distribuisce 
 							 				 		la spesa per quel programma, ovvero dove e quanto viene speso per ciascun livello,
 							 				 		per ciascun centro di costo'),
-							 				 	selectInput("tipo", label = "Entrate/Uscite", 
-							 				 	 						choices = tipo, selected = 'USCITE'),
-							 				 	selectInput('missione', 'Missione', choices = 'Tutto'),
-							 				 	selectInput('programma', 'Programma', choices = 'Tutto'),
+							 				 	selectInput('missione', 'Missione', choices = missionValues,
+							 				 							selected = "ORDINE PUBBLICO E SICUREZZA"),
+							 				 	selectInput('programma', 'Programma', choices = 'Tutto',
+							 				 							selected = "POLIZIA LOCALE E AMMINISTRATIVA"),
 							 				 	selectInput('anno', 'Seleziona un anno:', choices = c(2013:2016), 
 							 				 							selected = 2016)
 							 				 ),
