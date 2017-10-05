@@ -59,13 +59,19 @@ colnodes_resh <- c("parent",paste(colnodes,"resh",sep="_"))
 
 lnc <- length(colnodes_resh)-1
 
+values_get <- function(df) {
+	data_comune <- df
+	rendiconto <- data_comune_this$rendiconto
+	names(rendiconto) <- data_comune_this$cdc_resh
+	values <- rendiconto
+	values
+}
+values <- values_get(data_comune)
 
-rendiconto <- data_comune_this$rendiconto
-names(rendiconto) <- data_comune_this$cdc_resh
-values <- rendiconto
 options(max.print = 100)
 
-edges_get <- function(variables) {
+edges_get <- function(df) {
+	data_comune_this <- df
 	links <- NULL ## accumulator
 	for (i in rev(1:lnc)) {
 		
@@ -91,23 +97,38 @@ edges_get <- function(variables) {
 	}
 	links
 }
-links <- edges_get()
+links <- edges_get(data_comune_this)
 
-max_level <- 2 ## massimo livello rappresentato , va sommato +1 !!! 
-links <- links[links$level<=max_level,]
+data_max_level_get <- function(max_level) {
+	links <- links[links$level<=max_level,]
+	links
+}
+links <- data_max_level_get(max_level = 2)
 
-id_nodes <- unique(c(links$source[links$level==1],links$target))
-id_nodes <- sort(id_nodes)  
-###  sort(unique(c(links$source,links$target)))
-nodes <- 1:length(id_nodes)-1
-names(nodes) <- id_nodes
+nodes_get <- function(df) {
+	links <- df
+	id_nodes <- unique(c(links$source[links$level==1],links$target))
+	id_nodes <- sort(id_nodes)  
+	###  sort(unique(c(links$source,links$target)))
+	nodes <- 1:length(id_nodes)-1
+	names(nodes) <- id_nodes
+	nodes
+}
+nodes <- nodes_get(links)
 
+## df : (name, id) dei nodi
 df_nodes <- data.frame(name=names(nodes),ID=nodes,stringsAsFactors=FALSE)
+df_nodes
 
-links$source <- nodes[links$source]
-links$target <- nodes[links$target]
+subst_id_to_names <- function(links) {
+	links$source <- nodes[links$source]
+	links$target <- nodes[links$target]
+	links
+}
+links <- subst_id_to_names(links)
 
 
- ss <- sankeyNetwork(Links = links, Nodes = df_nodes, Source = 'source',
-							Target = 'target', Value = 'value',NodeID = 'name',	units = 'euro', fontSize = 10, nodeWidth = 10)
+ss <- sankeyNetwork(Links = links, Nodes = df_nodes, Source = 'source',
+										Target = 'target', Value = 'value',NodeID = 'name',	
+										units = 'euro', fontSize = 10, nodeWidth = 10)
 ss
