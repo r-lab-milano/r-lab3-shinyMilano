@@ -61,7 +61,7 @@ TimeSeries_Dettaglio <- function(nome_programma, spesa) {
 		geom_vline(xintercept = 2016.5, colour = "darkgrey", linetype = 2) +
 		ggtitle("Dettaglio spese correnti (valori in migliaia di Euro)") +
 		labs(x="anno", y = "importo") + 
-		theme(legend.position = "bottom") +
+		theme(legend.position = "bottom", plot.title = element_text(hjust = 0.5)) +
 		annotate("text", x = 2017.5, y = max(trova_dataset_finale(nome_programma, spesa)  %>% 
 																				 	select(Total)), label = "stanziamento",
 						 fontface = "italic", size = 4)+
