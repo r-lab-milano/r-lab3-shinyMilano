@@ -136,7 +136,7 @@ data_max_level_filter <- function(links, max_level) {
 	links <- links[links$level<=max_level,]
 	links
 }
-links <- data_max_level_filter(links, max_level = 2)
+links <- data_max_level_filter(links, max_level = 1)
 
 nodes_id_get <- function(df) {
 	links <- df
@@ -149,9 +149,56 @@ nodes_id_get <- function(df) {
 }
 nodes <- nodes_id_get(links)
 
+
+# label -------------------------------------------------------------------
+
+c(colnodes,"rendiconto")
+colnodes
+colnodes_pre = c("parent", colnodes)
+colnodes_resh
+full_df_get <- function(df) {
+	data_comune <- df
+	temp <- data_comune
+	for (i in 2:length(colnodes_pre)){
+		temp <-
+			temp %>%
+			mutate( parent = 1) %>%
+			unite(col = !!colnodes_resh[i], !!colnodes_pre[1:i],sep = ".",remove = F)
+	}
+	temp %>% select(ends_with("_resh"))
+	temp
+	
+} 
+full_df <- full_df_get(data_comune)
+
+df2dict <- function(df, key, value) {
+	dict <- df[[value]]
+	names(dict) <- df[[key]]
+	dict
+}
+label_dict_get <- function(df, level, level_name) {
+	temp <- df
+	col_resh <- colnodes_resh[2]
+	col_pre  <- paste0("ds_", colnodes_pre[2])
+	temp %>%
+		select(!!col_resh, !!col_pre) %>%
+		distinct(missione_resh, ds_missione)
+}
+nodes_labels <- 
+	label_dict_get(full_df, 1, "1.1")  %>%
+	df2dict("missione_resh", "ds_missione")
+nodes_df_1 <- 	label_dict_get(full_df, 1, "1.1") 
+# nodes2 <- as.character(nodes)
+# names(nodes2) <-  names(nodes)
+# nodes <- nodes2
 ## df : (name, id) dei nodi
-df_nodes <- data.frame(name=names(nodes),ID=nodes,stringsAsFactors=FALSE)
-df_nodes
+nodes_df_2 <- data.frame(name=names(nodes),ID=nodes,stringsAsFactors=FALSE)
+df_nodes <- nodes_df_2 %>%
+	left_join(nodes_df_1,by = c(name = "missione_resh")) %>%
+	mutate(name = ds_missione) %>%
+	select(- ds_missione)
+
+
 
 subst_id_to_names <- function(links, nodes) {
 	links$source <- nodes[links$source]
@@ -165,3 +212,4 @@ ss <- sankeyNetwork(Links = links_wId, Nodes = df_nodes, Source = 'source',
 										Target = 'target', Value = 'value',NodeID = 'name',	
 										units = 'euro', fontSize = 10, nodeWidth = 10)
 ss
+
