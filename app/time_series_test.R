@@ -1,4 +1,4 @@
-	
+
 # SpeseMilanoTimeSeries <- datafin %>% filter(tipo == "USCITE") %>% 
 # 	filter(ds_livello1 == "SPESE CORRENTI" | 
 # 				 	ds_livello1 == "SPESE IN CONTO CAPITALE") %>%
@@ -32,8 +32,8 @@ TimeSeries_Dettaglio <- function(nome_programma, spesa) {
 		theme(legend.position = "bottom") +
 		annotate("text", x = 2017.5, y = 1000000, label = "stanziamento")+
 		annotate("text", x = 2015.5, y = 1000000, label = "rendiconto")
-	}
-	
+}
+
 # TimeSeries_Correnti <- function(nome_programma) {
 # 	ggplot() +
 # 		geom_area(data = tab_liv2 %>% 
