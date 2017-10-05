@@ -119,9 +119,9 @@ TimeSeries_Dettaglio <- function(nome_programma, spesa) {
 		labs(x="anno", y = "importo") + 
 		ylim(NA, y_lim) +
 		theme(legend.position = "bottom", plot.title = element_text(size = 12, hjust = 0.5)) +
-		annotate("text", x = 2017.5, y = y_position, label = "stanziamento_1000",
+		annotate("text", x = 2017.5, y = y_position, label = "stanziamento",
 						 fontface = "italic", size = 4)+
-		annotate("text", x = 2015.5, y = y_position, label = "rendiconto_1000",
+		annotate("text", x = 2015.5, y = y_position, label = "rendiconto",
 						 fontface = "italic", size = 4) +
 		scale_fill_discrete(name= "Dettaglio spesa", 
 												labels = sapply(labels_legenda, stringr::str_wrap, width = 20)) +

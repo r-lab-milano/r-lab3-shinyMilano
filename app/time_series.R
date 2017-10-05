@@ -39,9 +39,9 @@ TimeSeries_Programma <- function(nome_programma) {
 		labs(x = "anno", y = "importo") 	+
 		guides(col = guide_legend(title = "Tipo di spesa"))+
 		geom_vline(xintercept = 2016.5, colour = "darkgrey", linetype = 2) +
-    annotate("text", x = 2017, y = y_position, label = "stanziamento_1000",
+    annotate("text", x = 2017, y = y_position, label = "stanziamento",
 						 fontface = "italic", size = 4)+
-		annotate("text", x = 2016, y = y_position, label = "rendiconto_1000",
+		annotate("text", x = 2016, y = y_position, label = "rendiconto",
 						 fontface = "italic", size = 4) +
 		ggtitle(paste(nome_programma, "(valori in migliaia di Euro)")) +
 		theme(legend.position = "bottom", plot.title = element_text(size = 15, hjust = 0.5)) +
