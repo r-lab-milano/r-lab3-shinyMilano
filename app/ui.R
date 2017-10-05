@@ -95,10 +95,13 @@ dashboardPage(
      					 				 				  voce costituisce."),
 							 				 	checkboxGroupInput("year_sun", label = "Year",
 							 				 										 choices = 2013:2016,
-							 				 										 selected = 2016)),
+							 				 										 selected = 2016)
+							 				 	),
 							 				 # Show a plot of the generated distribution
 							 				 mainPanel(
-							 				 	sunburstOutput("sun", width = "100%", height = "400px"))
+							 				 	sunburstOutput("sun", width = "100%", height = "400px"),
+							 				 	sunburstOutput("sun", width = "100%", height = "400px")
+							 				 	)
 							 )
 							 
 							 

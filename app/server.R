@@ -119,7 +119,7 @@ function(input, output, session) {
 	# 5-SUNBURST  
 	
 	output$sun <- renderSunburst({
-		sunburst(data_sun[data_sun$year==input$year_sun,])
+		sunburst(data_sun2[data_sun2$year==input$year_sun,])
 	})
 	
 }

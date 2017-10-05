@@ -23,6 +23,14 @@ data_sun <- data.frame(grouping = paste0(datafin$ds_livello1,"-",
 											 rendiconto = datafin$rendiconto,
 										year=datafin$anno)
 
+data_sun2 <- datafin %>%
+	mutate(grouping = 
+				 	as.factor(paste0(ds_livello1, "-", ds_livello2, "-", ds_livello3, "-", ds_livello4))) %>%
+	select(grouping, rendiconto, year = anno)
+
+
+
+
 source("time_series.R")
 source("time_series_test.R")
 # source("time_series_2.R")
