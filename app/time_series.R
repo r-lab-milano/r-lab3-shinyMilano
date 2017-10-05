@@ -3,10 +3,14 @@
 #Carico dataset
 #load("app/data/data_reshape.Rdata")
 
+#datafin <- datafin %>%
+#	mutate(rendiconto_1000 = round(rendiconto/1000),
+#				 stanziamento_1000 = round(stanziamento/1000))
+
 SpeseMilanoTimeSeries <- datafin %>% filter(tipo == "USCITE") %>% 
 	filter(ds_livello1 == "SPESE CORRENTI" | 
 				 	ds_livello1 == "SPESE IN CONTO CAPITALE") %>%
-	mutate(spesa = rendiconto+stanziamento) %>%
+	mutate(spesa = rendiconto_1000+stanziamento_1000) %>%
 	group_by(anno, ds_livello1, ds_programma) %>%
 	mutate(Total = sum(spesa)) %>%
 	select(anno, ds_livello1, ds_programma, Total) %>%
