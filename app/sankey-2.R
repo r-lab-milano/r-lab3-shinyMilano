@@ -31,11 +31,11 @@ data_comune_this_  <- filter_period(data_comune, anno, tipo)
 colnodes <- c("missione","programma",sprintf("livello%d",1:4),"cdc")
 
 ## DA AGGIUNGERE LE DESCRIZIONI
-add_unique_level <- function(df) {
+add_unique_level <- function(df, parent) {
 	data_comune_this_ <- df
 	data_comune_this <- data_comune_this_[,c(colnodes,"rendiconto")]
 	## LIVELLO ZERO
-	data_comune_this$parent <- 1
+	data_comune_this$parent <- parent
 	it__ <- "parent"
 	for (i in 1:length(colnodes)) {
 		
@@ -47,7 +47,7 @@ add_unique_level <- function(df) {
 	}
 	data_comune_this
 }
-data_comune_this <- add_unique_level(data_comune_this_)
+data_comune_this <- add_unique_level(data_comune_this_, parent = 1)
 #data_comune_this$livello0_resh <- as.character(data_comune_this$livello0)
 #data_comune_this$livello1_resh <- paste(data_comune_this$livello0_resh, data_comune_this$livello1, sep=".")
 #data_comune_this$livello2_resh <- paste(data_comune_this$livello1_resh, data_comune_this$livello2, sep=".")
@@ -86,7 +86,7 @@ edges_get <- function(df) {
 		ic <- duplicated(temp$target)
 		temp$ic <- ic 
 		temp <- temp[which(!ic),]
-		temp$level <- i+1-1
+		temp$level <- i
 		
 		if (!is.null(values)) temp$value <- as.numeric(values[temp$target])
 		
@@ -95,17 +95,50 @@ edges_get <- function(df) {
 		
 		links <- rbind(temp,links)  
 	}
-	links
+	list(	links = links, values = values)
 }
-links <- edges_get(data_comune_this)
+links <- edges_get(data_comune_this)$links
+links
+edges_get_2 <- function(df) {
+	data_comune_this <- df
+	links <- NULL ## accumulator
+	for (i in rev(1:lnc)) {
+		
+		extract_ <- function() {
+			## seleziona i livelli consecutivi
+			icol <- colnodes_resh[c(i,i+1)]       # nomi delle colonne
+			## le prende con la colonna rendiconto
+			temp <- data_comune_this[,c(icol,"rendiconto")]
+			## set names expected by sankey
+			names(temp) <- c("source","target","value")
+			# 
+			## remove duplicated
+			ic <- duplicated(temp$target)
+			temp$ic <- ic
+			temp <- temp[which(!ic),]
+			temp$level <- i
+			temp
+		}
+		temp <-extract_()
+		
+		if (!is.null(values)) temp$value <- as.numeric(values[temp$target])
+		
+		values <- tapply(X=temp$value,FUN=sum,INDEX=temp$source,simplify=TRUE)
+		
+		
+		links <- rbind(temp,links)  
+	}
+	list(	links = links, values = values)
+}
+stopifnot( links  == edges_get_2(data_comune_this)$links )
 
-data_max_level_get <- function(max_level) {
+data_max_level_filter <- function(links, max_level) {
 	links <- links[links$level<=max_level,]
 	links
 }
-links <- data_max_level_get(max_level = 2)
+links <- data_max_level_filter(links, max_level = 2)
 
-nodes_get <- function(df) {
+nodes_id_get <- function(df) {
 	links <- df
 	id_nodes <- unique(c(links$source[links$level==1],links$target))
 	id_nodes <- sort(id_nodes)  
@@ -114,21 +147,21 @@ nodes_get <- function(df) {
 	names(nodes) <- id_nodes
 	nodes
 }
-nodes <- nodes_get(links)
+nodes <- nodes_id_get(links)
 
 ## df : (name, id) dei nodi
 df_nodes <- data.frame(name=names(nodes),ID=nodes,stringsAsFactors=FALSE)
 df_nodes
 
-subst_id_to_names <- function(links) {
+subst_id_to_names <- function(links, nodes) {
 	links$source <- nodes[links$source]
 	links$target <- nodes[links$target]
 	links
 }
-links <- subst_id_to_names(links)
+links_wId <- subst_id_to_names(links, nodes)
 
 
-ss <- sankeyNetwork(Links = links, Nodes = df_nodes, Source = 'source',
+ss <- sankeyNetwork(Links = links_wId, Nodes = df_nodes, Source = 'source',
 										Target = 'target', Value = 'value',NodeID = 'name',	
 										units = 'euro', fontSize = 10, nodeWidth = 10)
 ss
