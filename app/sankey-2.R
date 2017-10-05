@@ -15,12 +15,16 @@ library(reshape2)
 anno <- 2013
 tipo <- "USCITE"
 
-###load("~/GIT/r-lab3-shinyMilano/data_reshape.Rdata")
-load("data/data_reshape.Rdata")
-data_comune <- datafin
-
-data_comune_this_  <- data_comune[data_comune$anno == anno & data_comune$tipo == tipo & data_comune$rendiconto!=0,]
-###data_comune_this_$livello0 <- 1 
+load_data <- function() {
+	load("data/data_reshape.Rdata")
+	datafin
+}
+data_comune <- load_data()
+filter_period <- function(df, anno, tipo) {
+	data_comune <- df
+	data_comune[data_comune$anno == anno & data_comune$tipo == tipo & data_comune$rendiconto!=0,]
+}
+data_comune_this_  <- filter_period(data_comune, anno, tipo)
 
 ## LIVELLI DI COSTI (TIPO ENTRATE)
 
