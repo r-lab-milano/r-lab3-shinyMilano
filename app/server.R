@@ -118,8 +118,12 @@ function(input, output, session) {
 	
 	# 5-SUNBURST  
 	
-	output$sun <- renderSunburst({
-		sunburst(data_sun2[data_sun2$year==input$year_sun,])
+	output$sunEntrate <- renderSunburst({
+		printSun(input$year_sun, "ENTRATE")
+	})
+	
+	output$sunUscite <- renderSunburst({
+		printSun(input$year_sun, "USCITE")
 	})
 	
 }

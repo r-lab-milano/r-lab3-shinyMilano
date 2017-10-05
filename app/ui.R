@@ -99,8 +99,13 @@ dashboardPage(
 							 				 	),
 							 				 # Show a plot of the generated distribution
 							 				 mainPanel(
-							 				 	sunburstOutput("sun", width = "100%", height = "400px"),
-							 				 	sunburstOutput("sun", width = "100%", height = "400px")
+							 				 	textOutput("Entrate"),
+							 				 	sunburstOutput("sunEntrate" #, width = "100%" , height = "200px"
+							 				 								 ),
+							 				 	textOutput("Uscite"),
+							 				 	sunburstOutput("sunUscite" # , width = "100%" # , height = "350px"
+							 				 	 							 )
+							 				 #	sunburstOutput("sun", width = "100%", height = "350px")
 							 				 	)
 							 )
 							 
