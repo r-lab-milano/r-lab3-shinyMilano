@@ -72,7 +72,7 @@ TimeSeries_Dettaglio <- function(nome_programma, spesa) {
 		ggtitle(paste("Dettaglio", spesa)) +
 		labs(x="anno", y = "importo") + 
 		ylim(NA, y_lim) +
-		theme(legend.position = "bottom", plot.title = element_text(hjust = 0.5)) +
+		theme(legend.position = "bottom", plot.title = element_text(size = 12, hjust = 0.5)) +
 		annotate("text", x = 2017.5, y = y_position, label = "stanziamento",
 						 fontface = "italic", size = 4)+
 		annotate("text", x = 2015.5, y = y_position, label = "rendiconto",

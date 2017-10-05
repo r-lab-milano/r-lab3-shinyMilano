@@ -40,7 +40,7 @@ TimeSeries_Programma <- function(nome_programma) {
 		annotate("text", x = 2016, y = y_position, label = "rendiconto",
 						 fontface = "italic", size = 4) +
 		ggtitle(paste(nome_programma, "(valori in migliaia di Euro)")) +
-		theme(legend.position = "bottom", plot.title = element_text(hjust = 0.5)) +
+		theme(legend.position = "bottom", plot.title = element_text(size = 15, hjust = 0.5)) +
 	scale_colour_manual(values = c("red2", "firebrick4"))
 }
 
