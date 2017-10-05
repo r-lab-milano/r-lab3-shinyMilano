@@ -16,7 +16,7 @@ anno <- 2013
 tipo <- "USCITE"
 
 ###load("~/GIT/r-lab3-shinyMilano/data_reshape.Rdata")
-load("~/local/rlab-milano/r-lab3-shinyMilano/data_reshape.Rdata")
+load("data/data_reshape.Rdata")
 data_comune <- datafin
 
 data_comune_this_  <- data_comune[data_comune$anno == anno & data_comune$tipo == tipo & data_comune$rendiconto!=0,]
@@ -99,4 +99,4 @@ links$target <- nodes[links$target]
 
  ss <- sankeyNetwork(Links = links, Nodes = df_nodes, Source = 'source',
 							Target = 'target', Value = 'value',NodeID = 'name',	units = 'euro', fontSize = 10, nodeWidth = 10)
-
+ss
