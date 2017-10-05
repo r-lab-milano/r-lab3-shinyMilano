@@ -15,21 +15,29 @@ SpeseMilanoTimeSeries <- datafin %>% filter(tipo == "USCITE") %>%
 TimeSeries1PossibleValues <- SpeseMilanoTimeSeries %>% select(ds_programma) %>% unique()
 
 TimeSeries_Programma <- function(nome_programma) {
+	y_lim <- max(SpeseMilanoTimeSeries %>% 
+							 	filter(ds_programma == nome_programma) %>% 
+							 	select(Total)) + max(SpeseMilanoTimeSeries %>% 
+							 											 	filter(ds_programma == nome_programma) %>% 
+							 											 	select(Total))*0.05
+	y_position <- max(SpeseMilanoTimeSeries %>% 
+							 	filter(ds_programma == nome_programma) %>% 
+							 	select(Total)) + max(SpeseMilanoTimeSeries %>% 
+							 											 	filter(ds_programma == nome_programma) %>% 
+							 											 	select(Total))*0.03
+	
 	ggplot(data = SpeseMilanoTimeSeries %>% 
 				 	filter(ds_programma == nome_programma), 
 				 aes(x = anno, y = Total, col = ds_livello1)) +
 		theme_minimal()  +
 		geom_line(size = 2) + geom_point(size = 2) +
+		ylim(NA, y_lim) +
 		labs(x = "anno", y = "importo") 	+
 		guides(col = guide_legend(title = "Tipo di spesa"))+
 		geom_vline(xintercept = 2016.5, colour = "darkgrey", linetype = 2) +
-    annotate("text", x = 2017.5, y = max(SpeseMilanoTimeSeries %>% 
-																				 	filter(ds_programma == nome_programma) %>% 
-																				 	select(Total)), label = "stanziamento",
+    annotate("text", x = 2017, y = y_position, label = "stanziamento",
 						 fontface = "italic", size = 4)+
-		annotate("text", x = 2015.5, y = max(SpeseMilanoTimeSeries %>% 
-																				 	filter(ds_programma == nome_programma) %>% 
-																				 	select(Total)), label = "rendiconto",
+		annotate("text", x = 2016, y = y_position, label = "rendiconto",
 						 fontface = "italic", size = 4) +
 		ggtitle(paste(nome_programma, "(valori in migliaia di Euro)")) +
 		theme(legend.position = "bottom", plot.title = element_text(hjust = 0.5)) +

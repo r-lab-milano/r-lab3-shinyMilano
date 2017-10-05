@@ -53,6 +53,16 @@ trova_dataset_finale <- function(nome_programma, spesa) {
 
 
 TimeSeries_Dettaglio <- function(nome_programma, spesa) {
+	y_lim <- max(SpeseMilanoTimeSeries %>% 
+							 	filter(ds_programma == nome_programma, ds_livello1 == spesa) %>% 
+							 	select(Total)) + max(SpeseMilanoTimeSeries %>% 
+							 											 	filter(ds_programma == nome_programma, ds_livello1 == spesa) %>% 
+							 											 	select(Total))*0.05
+	y_position <- max(SpeseMilanoTimeSeries %>% 
+											filter(ds_programma == nome_programma, ds_livello1 == spesa) %>% 
+											select(Total)) + max(SpeseMilanoTimeSeries %>% 
+																					 	filter(ds_programma == nome_programma, ds_livello1 == spesa) %>% 
+																					 	select(Total))*0.03
 	labels_legenda <- c(as.vector(top_ones_againts_others(nome_programma, spesa)[[1]]), "ALTRO")
 	ggplot() +
 		geom_area(data = trova_dataset_finale(nome_programma, spesa), 
@@ -61,12 +71,11 @@ TimeSeries_Dettaglio <- function(nome_programma, spesa) {
 		geom_vline(xintercept = 2016.5, colour = "darkgrey", linetype = 2) +
 		ggtitle(paste("Dettaglio", spesa)) +
 		labs(x="anno", y = "importo") + 
+		ylim(NA, y_lim) +
 		theme(legend.position = "bottom", plot.title = element_text(hjust = 0.5)) +
-		annotate("text", x = 2017.5, y = max(trova_dataset_finale(nome_programma, spesa)  %>% 
-																				 	select(Total)), label = "stanziamento",
+		annotate("text", x = 2017.5, y = y_position, label = "stanziamento",
 						 fontface = "italic", size = 4)+
-		annotate("text", x = 2015.5, y = max(trova_dataset_finale(nome_programma, spesa) %>% 
-																				 	select(Total)), label = "rendiconto",
+		annotate("text", x = 2015.5, y = y_position, label = "rendiconto",
 						 fontface = "italic", size = 4) +
 		scale_fill_discrete(name= "Dettaglio spesa", 
 												labels = sapply(labels_legenda, stringr::str_wrap, width = 20)) +
