@@ -81,9 +81,15 @@ function(input, output, session) {
 	# 		head(n=input$topNum)
 	# })
 	
-	output$tableTop <- renderDataTable({
-		dataTop(input$tipo_movimento, input$year, input$topNum)
+	output$histTop <- renderPlot({
+		plotTop(input$tipo_movimento, input$year, input$topNum)
 	})
+	
+		output$tableTop <- renderDataTable({
+		tabTop(input$tipo_movimento, input$year, input$topNum)
+	})
+	
+
 	
 	# 5-SUNBURST  
 	
