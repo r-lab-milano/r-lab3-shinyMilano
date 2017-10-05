@@ -18,6 +18,7 @@ dashboardPage(
 							 				 		vuoi osservare i valori. Nel grafico puoi quindi osservare come si distribuisce 
 							 				 		la spesa per quel programma, ovvero dove e quanto viene speso per ciascun livello,
 							 				 		per ciascun centro di costo'),
+							 				 	h3("Seleziona missione e programma"),
 							 				 	selectInput('missione', 'Missione', choices = missionValues,
 							 				 							selected = "ORDINE PUBBLICO E SICUREZZA"),
 							 				 	selectInput('programma', 'Programma', choices = 'Tutto',

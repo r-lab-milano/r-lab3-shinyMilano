@@ -1,35 +1,17 @@
 # 1-STRUCTUREPLOT
 
 function(input, output, session) {
-
 	df_filtered <- reactive({
-		# 	if (input$missione == 'Tutto') {
-		# 		df
-		# 	} else {
-		# 		df <- df %>%
-		# 			filter(ds_missione == input$missione)
-		# 	}
-		# 	
-		# 	if (input$programma == 'Tutto') {
-		# 		df
-		# 	} else {
-		# 		df <- df %>%
-		# 			filter(ds_programma == input$programma)
-		# 	}
-		# 
-		# df
-		df %>% filter(ds_missione == input$missione, ds_programma == input$programma)
-		
+		datafin %>% filter(ds_missione == input$missione, ds_programma == input$programma)
 	})
 
 	observe({
-		programma_filtered <- df %>%
+		programma_filtered <- datafin %>%
 			filter(ds_missione == input$missione) %>%
 			select(ds_programma) %>%
 			unique()
 		updateSelectInput(session, 'programma', choices = programma_filtered)
 	})
-	
 
 	observeEvent(c(input$programma, input$missione), {
 		output$structure <- renderPlot({
@@ -40,66 +22,6 @@ function(input, output, session) {
 
 
 
-# function(input, output, session) {
-# 	
-# 	df_filtered <- reactive({
-# 		if (input$tipo == 'USCITE') {
-# 			df <- filter(df, tipo == 'USCITE')
-# 			if (input$missione == 'Tutto') {
-# 				df
-# 			} else {
-# 				df <- df %>% 
-# 					filter(ds_missione == input$missione)
-# 			}
-# 			
-# 			if (input$programma == 'Tutto') {
-# 				df
-# 			} else {
-# 				df <- df %>% 
-# 					filter(ds_programma == input$programma)
-# 			}
-# 		} else {
-# 			df <- filter(df, tipo == 'ENTRATE')
-# 		}
-# 		df
-# 	})
-# 	
-# 	
-# 	
-# 	observe({
-# 		
-# 		missione_filtered <- df %>% 
-# 			filter(tipo == input$tipo) %>% 
-# 			select(ds_missione) %>% 
-# 			unique()
-# 		
-# 		updateSelectInput(session, 'missione', choices = missione_filtered)
-# 	})
-# 	
-# 	observe({
-# 		if (input$missione == 'Tutto') {
-# 			programma_filtered <- df %>% 
-# 				filter(tipo == input$tipo, ds_missione == input$missione) %>% 
-# 				select(ds_programma) %>% 
-# 				unique()
-# 		} else {
-# 			programma_filtered <- df %>% 
-# 				filter(tipo == "USCITE", ds_missione == input$missione) %>% 
-# 				select(ds_programma) %>% 
-# 				unique()
-# 		}
-# 		
-# 		updateSelectInput(session, 'programma', choices = programma_filtered)
-# 	})
-# 	
-# 	
-# 	observeEvent(c(input$programma, input$missione), {
-# 		output$structure <- renderPlot({
-# 			structure_plot(df_filtered(), input$anno)
-# 		}, 
-# 		height = 800)
-# 	})
-	
 	
 	# 2-TIMESERIES
 	
