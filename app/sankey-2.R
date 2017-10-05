@@ -31,21 +31,23 @@ data_comune_this_  <- filter_period(data_comune, anno, tipo)
 colnodes <- c("missione","programma",sprintf("livello%d",1:4),"cdc")
 
 ## DA AGGIUNGERE LE DESCRIZIONI
-
-data_comune_this <- data_comune_this_[,c(colnodes,"rendiconto")]
-## LIVELLO ZERO
-data_comune_this$parent <- 1
-it__ <- "parent"
-for (i in 1:length(colnodes)) {
-  
-   it <- colnodes[i]
-   it_ <- paste(it,"resh",sep="_")
-   data_comune_this[,it_] <- paste(data_comune_this[,it__], data_comune_this[,it], sep=".") 
-   it__ <- it_
-   
+add_unique_level <- function(df) {
+	data_comune_this_ <- df
+	data_comune_this <- data_comune_this_[,c(colnodes,"rendiconto")]
+	## LIVELLO ZERO
+	data_comune_this$parent <- 1
+	it__ <- "parent"
+	for (i in 1:length(colnodes)) {
+		
+		it <- colnodes[i]
+		it_ <- paste(it,"resh",sep="_")
+		data_comune_this[,it_] <- paste(data_comune_this[,it__], data_comune_this[,it], sep=".") 
+		it__ <- it_
+		
+	}
+	data_comune_this
 }
-
-
+data_comune_this <- add_unique_level(data_comune_this_)
 #data_comune_this$livello0_resh <- as.character(data_comune_this$livello0)
 #data_comune_this$livello1_resh <- paste(data_comune_this$livello0_resh, data_comune_this$livello1, sep=".")
 #data_comune_this$livello2_resh <- paste(data_comune_this$livello1_resh, data_comune_this$livello2, sep=".")
