@@ -18,16 +18,22 @@ TimeSeries_Programma <- function(nome_programma) {
 	ggplot(data = SpeseMilanoTimeSeries %>% 
 				 	filter(ds_programma == nome_programma), 
 				 aes(x = anno, y = Total, col = ds_livello1)) +
-		theme_minimal() +
-		geom_line(size = 2) +
-		geom_point(size = 3) +
+		theme_minimal()  +
+		geom_line(size = 2) + geom_point(size = 2) +
+		labs(x = "anno", y = "importo") 	+
+		guides(col = guide_legend(title = "Tipo di spesa"))+
 		geom_vline(xintercept = 2016.5, colour = "darkgrey", linetype = 2) +
-		ggtitle(nome_programma) +
-		labs(x="anno", y = "importo") + 
+    annotate("text", x = 2017.5, y = max(SpeseMilanoTimeSeries %>% 
+																				 	filter(ds_programma == nome_programma) %>% 
+																				 	select(Total)), label = "stanziamento",
+						 fontface = "italic", size = 4)+
+		annotate("text", x = 2015.5, y = max(SpeseMilanoTimeSeries %>% 
+																				 	filter(ds_programma == nome_programma) %>% 
+																				 	select(Total)), label = "rendiconto",
+						 fontface = "italic", size = 4) +
+		ggtitle(paste(nome_programma, "(valori in migliaia di Euro)")) +
 		theme(legend.position = "bottom") +
-		annotate("text", x = 2017.5, y = Inf, label = "stanziamento")+
-		annotate("text", x = 2015.5, y = Inf, label = "rendiconto") +
-		scale_colour_manual(values = c("red2", "firebrick4"))
+	scale_colour_manual(values = c("red2", "firebrick4"))
 }
 
-TimeSeries_Programma("ORGANI ISTITUZIONALI")
+# TimeSeries_Programma("ORGANI ISTITUZIONALI")
