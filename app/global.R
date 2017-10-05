@@ -16,6 +16,11 @@ tipo <- unique(df$tipo)
 
 load("./data/data_reshape.Rdata")
 
+datafin <- datafin %>%
+	mutate(rendiconto_1000 = round(rendiconto/1000),
+				 stanziamento_1000 = round(stanziamento/1000))
+
+
 
 source("time_series.R")
 source("time_series_test.R")

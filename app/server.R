@@ -55,9 +55,9 @@ function(input, output, session) {
 		query <- input$text
 		rows <- get_row_from_word(input$text)
 		data <- rows %>% dplyr::select(`tipo`, capitolo = `ds_capitolo_PEG`, `anno`,
-																	 `rendiconto`) %>%
+																	 `rendiconto_1000`) %>%
 			filter(`anno` < 2017) %>%
-			spread(`anno`, `rendiconto`)	
+			spread(`anno`, `rendiconto_1000`)
 		data
 	})
 	
@@ -69,10 +69,10 @@ function(input, output, session) {
 	# 4-TABLETOP    
 	
 	output$tableTop <- renderDataTable({
-		df %>% select(ds_centro_resp, tipo, anno, rendiconto) %>% 	
+		datafin %>% select(ds_centro_resp, tipo, anno, rendiconto_1000) %>% 	
 			filter(tipo == input$tipo_movimento, anno == input$year) %>%
 			group_by(ds_centro_resp) %>%
-			summarize(valore = sum(rendiconto)) %>%
+			summarize(valore = sum(rendiconto_1000)) %>%
 			arrange(desc(valore)) %>%
 			head(n=input$topNum)
 	})
