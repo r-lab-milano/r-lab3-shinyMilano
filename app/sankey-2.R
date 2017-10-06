@@ -1,6 +1,6 @@
 ##
 ## Sunkey Diagram Representation 
-## By ..., Emanuele Cordano, ... (aggiungere  altri autori) 
+## By ..., Emanuele Cordano, ..., Andrea Melloncelli (aggiungere  altri autori) 
 ## Date: 2017-09-23
 ##
 
@@ -13,7 +13,7 @@ library(tidyr)
 # library(sqldf)
 
 
-rm(list=ls())
+#rm(list=ls())
 load_data <- function() {
 	load("data/data_reshape.Rdata")
 	datafin
@@ -54,8 +54,6 @@ values_get <- function(df) {
 	values <- rendiconto
 	values
 }
-
-options(max.print = 100)
 
 edges_get <- function(df, lnc, colnodes_resh, values) {
 	data_comune_this <- df
@@ -213,11 +211,6 @@ semi_sanky <- function(df, anno, tipo, depth = 1) {
 		df_nodes  = df_nodes
 	)	
 }
-data_comune <- load_data()
-anno <- 2013
-tipo <- "USCITE"
-sank_out <- semi_sanky(data_comune, anno = anno, tipo = "USCITE", depth = 1)
-sank_in <- semi_sanky(data_comune, anno = anno, tipo = "ENTRATE", depth = 3)
 sank_invert <- function(sank) {
 	sank$links_wId <-
 		sank$links_wId %>%
@@ -236,14 +229,25 @@ sank_merge <- function(sank1, sank2) {
 		df_nodes  = rbind(sank1$df_nodes , sank2$df_nodes)
 	)	
 }
-debug(sank_merge)
 
-sank <- sank_merge(sank_out, sank_invert(sank_in))
-View(sank$df_nodes)
-View(sank$links_wId)
-sank <- sank_out
-ss <- sankeyNetwork(Links = sank$links_wId, Nodes = sank$df_nodes, Source = 'source',
-										Target = 'target', Value = 'value',NodeID = 'name',	
-										units = 'euro', fontSize = 10, nodeWidth = 10)
-ss
+# sank <- sank_merge(sank_out, sank_invert(sank_in))
 
+sankey_gen <- function(data_comune, anno, tipo, depth = 1, ...) {
+	sank <- semi_sanky(data_comune, anno = anno, tipo = tipo, depth = depth)
+	sankey_plot(sank, ...)
+}
+sankey_plot <- function(sank, fontSize = 10, nodeWidth = 10, ...) {
+	ss <- sankeyNetwork(Links = sank$links_wId, Nodes = sank$df_nodes, Source = 'source',
+											Target = 'target', Value = 'value',NodeID = 'name',	
+											units = 'euro', fontSize = fontSize, nodeWidth = nodeWidth, 
+											...)
+}
+data_comune <- load_data()
+anno <- 2013
+tipo <- "USCITE"
+# sank_out <- semi_sanky(data_comune, anno = anno, tipo = "USCITE", depth = 1)
+# sank_in <- semi_sanky(data_comune, anno = anno, tipo = "ENTRATE", depth = 3)
+if (interactive()) {
+	ss <- sankey_gen(data_comune, 2013, "USCITE", depth = 1, fontSize = 6, width = NULL)
+	print(ss)
+}
