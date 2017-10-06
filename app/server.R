@@ -98,6 +98,21 @@ function(input, output, session) {
 	})
 	
 	
+	# 6-SANKEY
+	
+	output$sankey_out <- renderSankeyNetwork({
+		if (input$sankey_tipo == "ENTRATE") depth = 3
+		else depth = 1
+		## padding: distanza verticale tra i nodi?
+		## nodeWidth: larghezza orizzontale dei nodi
+		## depth: n di livelli da visualizzare
+		## NB: in ui.R setta il parametro height
+		ss <- sankey_gen(data_comune, input$sankey_year, 
+										 input$sankey_tipo, depth = depth, 
+										 fontSize = 24*depth, nodeWidth = 10*depth,
+										 width = NULL, nodePadding = 50)
+		ss
+	})
 	
 }
 

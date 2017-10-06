@@ -105,6 +105,20 @@ dashboardPage(
 							 				 mainPanel(
 							 				 	sunburstOutput("sun")
 							 				 	)
+							 ),
+							 
+							 tabPanel("Sankey",
+							 	sidebarPanel(
+							 		selectInput("sankey_tipo", "Tipo:",
+							 								c("ENTRATE", "USCITE")),
+							 		selectInput("sankey_year", "Anno",
+							 								c("2013", "2014", "2015", "2016"))
+							 		# textInput("sankey_n_levels", "Risultati da mostrare:",
+							 		# 					10)
+							 	),
+							 	mainPanel( 
+							 		sankeyNetworkOutput(outputId = "sankey_out", height = 1000)
+							 	)
 							 )
 							 
 							 
