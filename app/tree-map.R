@@ -1,8 +1,9 @@
 load("../other-data/data_reshape.Rdata")
-library(shiny)
-
-library(treemap)
-library(d3treeR)
+## commented because it interfers with shinyapp.io installation
+# library(shiny)
+# 
+# library(treemap)
+#library(d3treeR) ## commented because it interfers with shinyapp.io installation
 
 # library(devtools)
 # install_github("timelyportfolio/d3treeR")

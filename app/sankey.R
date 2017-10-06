@@ -1,7 +1,8 @@
-library(networkD3)
-library(dplyr)
-library(xlsx)
-# library(sqldf)
+## commented because it interfers with shinyapp.io installation
+# library(networkD3)
+# library(dplyr)
+# library(xlsx)
+# # library(sqldf)
 
 anno <- 2013
 tipo <- "USCITE"
