@@ -8,6 +8,7 @@
 library(networkD3)
 library(dplyr)
 library(reshape2)
+library(tidyr)
 #library(xlsx)
 # library(sqldf)
 
@@ -220,17 +221,27 @@ sank_in <- semi_sanky(data_comune, anno = anno, tipo = "ENTRATE", depth = 3)
 sank_invert <- function(sank) {
 	sank$links_wId <-
 		sank$links_wId %>%
-		mutate(source_ = target, target = source, source = source_)
+		mutate(source_ = target, target = source, source = source_) %>%
+		select(- source_)
 	sank
 }
 sank_merge <- function(sank1, sank2) {
+	sank2$links_wId$source = sank2$links_wId$source + 100
+	sank2$links_wId$target = sank2$links_wId$target + 100
+	sank2$links_wId$target[[1]] = 0
+	sank2$df_nodes$ID = 	sank2$df_nodes$ID +100
+	sank2$df_nodes    =	sank2$df_nodes[-1,]
 	list(
-		links_wId = c(sank1$links_wId, sank2$links_wId),
-		df_nodes  = c(sank1$df_nodes , sank2$df_nodes)
+		links_wId = rbind(sank1$links_wId, sank2$links_wId),
+		df_nodes  = rbind(sank1$df_nodes , sank2$df_nodes)
 	)	
 }
+debug(sank_merge)
+
 sank <- sank_merge(sank_out, sank_invert(sank_in))
-sank <- sank_out ### wip
+View(sank$df_nodes)
+View(sank$links_wId)
+sank <- sank_out
 ss <- sankeyNetwork(Links = sank$links_wId, Nodes = sank$df_nodes, Source = 'source',
 										Target = 'target', Value = 'value',NodeID = 'name',	
 										units = 'euro', fontSize = 10, nodeWidth = 10)
