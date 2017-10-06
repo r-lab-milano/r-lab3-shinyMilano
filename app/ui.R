@@ -2,7 +2,7 @@ source("global.R")
 
 dashboardPage(
 	skin = "red",
-	dashboardHeader(title = "r-lab3-shinyMilano",
+	dashboardHeader(title = "R-Lab / Milano Budget Trasparente",
 									titleWidth = 450),
 	dashboardSidebar(disable = TRUE),
 	
@@ -107,10 +107,10 @@ dashboardPage(
 							 				 	)
 							 ),
 							 
-							 tabPanel("Sankey",
+							 tabPanel("Flussi di cassa",
 							 	sidebarPanel(
 							 		selectInput("sankey_tipo", "Tipo:",
-							 								c("ENTRATE", "USCITE")),
+							 								c("ENTRATE", "USCITE"), selected = "USCITE"),
 							 		selectInput("sankey_year", "Anno",
 							 								c("2013", "2014", "2015", "2016"))
 							 		# textInput("sankey_n_levels", "Risultati da mostrare:",
